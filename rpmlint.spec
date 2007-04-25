@@ -4,7 +4,7 @@ Version: 0.77
 Release: %mkrel 3
 Source0: http://rpmlint.zarb.org/download/%{name}-%{version}.tar.bz2
 Patch0:  Changeset1205.diff
-Source1: rpmlint.config.bz2
+Source1: rpmlint.config
 URL: http://rpmlint.zarb.org/
 License: GPL
 Group: Development/Other
@@ -27,7 +27,7 @@ make
 %install
 rm -rf $RPM_BUILD_ROOT
 make install DESTDIR=$RPM_BUILD_ROOT
-bzcat %{SOURCE1} > $RPM_BUILD_ROOT/%{_datadir}/%{name}/config
+cp %{SOURCE1} $RPM_BUILD_ROOT/%{_datadir}/%{name}/config
  
 %clean
 rm -rf $RPM_BUILD_ROOT

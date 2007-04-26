@@ -1,9 +1,8 @@
 Summary: Rpm correctness checker
 Name: rpmlint
 Version: 0.80
-Release: %mkrel 1
+Release: %mkrel 2
 Source0: http://rpmlint.zarb.org/download/%{name}-%{version}.tar.bz2
-Patch0:  Changeset1205.diff
 Source1: rpmlint.config
 URL: http://rpmlint.zarb.org/
 License: GPL
@@ -19,7 +18,6 @@ Binary and source packages can be checked.
 
 %prep
 %setup -q
-%patch -p1
 
 %build
 make

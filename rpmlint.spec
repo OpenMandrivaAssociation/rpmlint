@@ -1,7 +1,7 @@
 Summary: Rpm correctness checker
 Name: rpmlint
 Version: 0.80
-Release: %mkrel 2
+Release: %mkrel 3
 Source0: http://rpmlint.zarb.org/download/%{name}-%{version}.tar.bz2
 Source1: rpmlint.config
 URL: http://rpmlint.zarb.org/

@@ -1,16 +1,20 @@
-Summary: Rpm correctness checker
 Name: rpmlint
-Version: 0.80
-Release: %mkrel 4
-Source0: http://rpmlint.zarb.org/download/%{name}-%{version}.tar.bz2
-Source1: rpmlint.config
-URL: http://rpmlint.zarb.org/
+Version: 0.81
+Release: %mkrel 1
+Summary: RPM correctness checker
 License: GPL
 Group: Development/Other
-BuildRoot: %{_tmppath}/%{name}-buildroot
-Requires: python rpm-python binutils gcc-cpp 
+URL: http://rpmlint.zarb.org/
+Source0: http://rpmlint.zarb.org/download/rpmlint-%{version}.tar.bz2
+Source1: rpmlint.config
+Requires: binutils
+Requires: gcc-cpp 
+Requires: python
+Requires: rpm-python
+BuildRequires: python
+BuildRequires: rpm-python
 BuildArch: noarch
-BuildRequires: python rpm-python
+BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 
 %description
 Rpmlint is a tool to check common errors on rpm packages.
@@ -20,15 +24,15 @@ Binary and source packages can be checked.
 %setup -q
 
 %build
-make
+%{make}
 
 %install
-rm -rf $RPM_BUILD_ROOT
-make install DESTDIR=$RPM_BUILD_ROOT
-cp %{SOURCE1} $RPM_BUILD_ROOT/%{_datadir}/%{name}/config
+rm -rf %{buildroot}
+%{makeinstall_std}
+cp -a %{SOURCE1} %{buildroot}/%{_datadir}/%{name}/config
  
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root,0755)
@@ -39,4 +43,3 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %{_sysconfdir}/%{name}/config
 %config(noreplace) %{_sysconfdir}/bash_completion.d/%{name}
 %dir %{_sysconfdir}/%{name}/
-

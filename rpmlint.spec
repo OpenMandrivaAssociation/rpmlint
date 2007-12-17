@@ -14,7 +14,6 @@ Requires: rpm-python
 BuildRequires: python
 BuildRequires: rpm-python
 BuildArch: noarch
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 
 %description
 Rpmlint is a tool to check common errors on rpm packages.

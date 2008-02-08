@@ -7,6 +7,7 @@ Group: Development/Other
 URL: http://rpmlint.zarb.org/
 Source0: http://rpmlint.zarb.org/download/rpmlint-%{version}.tar.bz2
 Source1: rpmlint.config
+Patch0:	rpmlint-0.81-rpm5.org-support.patch
 Requires: binutils
 Requires: gcc-cpp 
 Requires: python
@@ -22,6 +23,7 @@ Binary and source packages can be checked.
 
 %prep
 %setup -q
+%patch0 -p0 -b .rpm5
 
 %build
 %{make}

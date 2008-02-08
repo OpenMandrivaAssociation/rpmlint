@@ -2,7 +2,7 @@ Name: rpmlint
 Version: 0.81
 Release: %mkrel 1
 Summary: RPM correctness checker
-License: GPL
+License: GPLv2+
 Group: Development/Other
 URL: http://rpmlint.zarb.org/
 Source0: http://rpmlint.zarb.org/download/rpmlint-%{version}.tar.bz2
@@ -36,10 +36,10 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root,0755)
-%doc COPYING ChangeLog INSTALL README*
+%doc ChangeLog README*
 %{_bindir}/*
 %{_datadir}/%{name}
-%_mandir/man1/*
+%{_mandir}/man1/*
 %config(noreplace) %{_sysconfdir}/%{name}/config
 %config(noreplace) %{_sysconfdir}/bash_completion.d/%{name}
 %dir %{_sysconfdir}/%{name}/

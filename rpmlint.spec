@@ -17,7 +17,7 @@ Patch6: rpmlint-non-standard-Xid_is_warning.patch
 Patch7: rpmlint-wrong-script-interpreter_is_warning.patch
 Patch8: rpmlint-htaccess-file_is_warning.patch
 Patch9: rpmlint-statically-linked-binary_is_warning.patch
-Patch10: rpmlint-statically-linked-binary_is_warning.patch
+Patch10: rpmlint-no-cleaning-of-buildroot_is_warning.patch
 Patch11: rpmlint-invalid-lc-messages-dir_is_warning.patch
 Patch12: rpmlint-shared-lib-without-dependency-information_is_warning.patch
 

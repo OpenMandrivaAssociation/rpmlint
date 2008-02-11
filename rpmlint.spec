@@ -1,6 +1,6 @@
 Name: rpmlint
 Version: 0.81
-Release: %mkrel 4
+Release: %mkrel 5
 Summary: RPM correctness checker
 License: GPLv2+
 Group: Development/Other
@@ -10,6 +10,7 @@ Source1: rpmlint.config
 Patch0:	rpmlint-0.81-rpm5.org-support.patch
 Patch1:	rpmlint-non-std-group_is_error.patch
 Patch2:	rpmlint-hardcoded-library-path_is_warning.patch
+Patch3:	rpmlint-prereq-use_is_error.patch
 Requires: binutils
 Requires: gcc-cpp 
 Requires: python
@@ -28,6 +29,7 @@ Binary and source packages can be checked.
 %patch0 -p0 -b .rpm5
 %patch1 -p0 -b .group
 %patch2 -p0 -b .libpath
+%patch3 -p0 -b .prereq
 
 %build
 %{make}

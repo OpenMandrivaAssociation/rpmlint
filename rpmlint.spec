@@ -9,6 +9,7 @@ Source0: http://rpmlint.zarb.org/download/rpmlint-%{version}.tar.bz2
 Source1: rpmlint.config
 Patch0:	rpmlint-0.81-rpm5.org-support.patch
 Patch1:	rpmlint-non-std-group_is_error.patch
+Patch2:	rpmlint-hardcoded-library-path_is_warning.patch
 Requires: binutils
 Requires: gcc-cpp 
 Requires: python
@@ -26,6 +27,7 @@ Binary and source packages can be checked.
 %setup -q
 %patch0 -p0 -b .rpm5
 %patch1 -p0 -b .group
+%patch2 -p0 -b .libpath
 
 %build
 %{make}

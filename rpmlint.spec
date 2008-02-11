@@ -1,6 +1,6 @@
 Name: rpmlint
 Version: 0.81
-Release: %mkrel 9
+Release: %mkrel 10
 Summary: RPM correctness checker
 License: GPLv2+
 Group: Development/Other
@@ -15,7 +15,6 @@ Patch4: rpmlint-non-executable-script_is_warning.patch
 Patch5: rpmlint-script-without-shebang_is_warning.patch
 Patch6: rpmlint-non-standard-Xid_is_warning.patch
 Patch7: rpmlint-wrong-script-interpreter_is_warning.patch
-Patch8: rpmlint-htaccess-file_is_warning.patch
 Patch9: rpmlint-statically-linked-binary_is_warning.patch
 Patch10: rpmlint-no-cleaning-of-buildroot_is_warning.patch
 Patch11: rpmlint-invalid-lc-messages-dir_is_warning.patch
@@ -46,7 +45,6 @@ Binary and source packages can be checked.
 %patch5 -p0 
 %patch6 -p0 
 %patch7 -p0 
-%patch8 -p0 
 %patch9 -p0 
 %patch10 -p0 
 %patch11 -p0 

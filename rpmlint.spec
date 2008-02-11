@@ -1,6 +1,6 @@
 Name: rpmlint
 Version: 0.81
-Release: %mkrel 5
+Release: %mkrel 6
 Summary: RPM correctness checker
 License: GPLv2+
 Group: Development/Other
@@ -11,6 +11,12 @@ Patch0:	rpmlint-0.81-rpm5.org-support.patch
 Patch1:	rpmlint-non-std-group_is_error.patch
 Patch2:	rpmlint-hardcoded-library-path_is_warning.patch
 Patch3:	rpmlint-prereq-use_is_error.patch
+Patch4: rpmlint-non-executable-script_is_warning.patch
+Patch5: rpmlint-script-without-shebang_is_warning.patch
+Patch6: rpmlint-non-standard-Xid_is_warning.patch
+Patch7: rpmlint-wrong-script-interpreter_is_warning.patch
+Patch8: rpmlint-htaccess-file_is_warning.patch
+
 Requires: binutils
 Requires: gcc-cpp 
 Requires: python
@@ -30,6 +36,11 @@ Binary and source packages can be checked.
 %patch1 -p0 -b .group
 %patch2 -p0 -b .libpath
 %patch3 -p0 -b .prereq
+%patch4 -p0 
+%patch5 -p0 
+%patch6 -p0 
+%patch7 -p0 
+%patch8 -p0 
 
 %build
 %{make}

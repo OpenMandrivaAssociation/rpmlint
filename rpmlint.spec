@@ -20,6 +20,7 @@ Patch9: rpmlint-statically-linked-binary_is_warning.patch
 Patch10: rpmlint-no-cleaning-of-buildroot_is_warning.patch
 Patch11: rpmlint-invalid-lc-messages-dir_is_warning.patch
 Patch12: rpmlint-shared-lib-without-dependency-information_is_warning.patch
+Patch13: rpmlint_only-non-binary-in-usr-lib_is_warning.patch
 
 Requires: binutils
 Requires: gcc-cpp 
@@ -49,6 +50,7 @@ Binary and source packages can be checked.
 %patch10 -p0 
 %patch11 -p0 
 %patch12 -p0 
+%patch13 -p0 
 
 %build
 %{make}

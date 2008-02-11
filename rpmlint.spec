@@ -1,6 +1,6 @@
 Name: rpmlint
 Version: 0.81
-Release: %mkrel 7
+Release: %mkrel 8
 Summary: RPM correctness checker
 License: GPLv2+
 Group: Development/Other
@@ -17,6 +17,7 @@ Patch6: rpmlint-non-standard-Xid_is_warning.patch
 Patch7: rpmlint-wrong-script-interpreter_is_warning.patch
 Patch8: rpmlint-htaccess-file_is_warning.patch
 Patch9: rpmlint-statically-linked-binary_is_warning.patch
+Patch10: rpmlint-statically-linked-binary_is_warning.patch
 
 Requires: binutils
 Requires: gcc-cpp 
@@ -43,6 +44,7 @@ Binary and source packages can be checked.
 %patch7 -p0 
 %patch8 -p0 
 %patch9 -p0 
+%patch10 -p0 
 
 %build
 %{make}

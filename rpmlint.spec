@@ -1,6 +1,6 @@
 Name: rpmlint
 Version: 0.81
-Release: %mkrel 11
+Release: %mkrel 12
 Summary: RPM correctness checker
 License: GPLv2+
 Group: Development/Other
@@ -21,7 +21,7 @@ Patch11: rpmlint-invalid-lc-messages-dir_is_warning.patch
 Patch12: rpmlint-shared-lib-without-dependency-information_is_warning.patch
 Patch13: rpmlint_only-non-binary-in-usr-lib_is_warning.patch
 Patch14: rpmlint_update-menus-without-menu-file-in-_is_warning.patch
-
+Patch15: rpmlint.fix38157.diff 
 Requires: binutils
 Requires: gcc-cpp 
 Requires: python
@@ -51,6 +51,7 @@ Binary and source packages can be checked.
 %patch12 -p0 
 %patch13 -p0 
 %patch14 -p0 
+%patch15 -p1
 
 %build
 %{make}
@@ -59,6 +60,7 @@ Binary and source packages can be checked.
 rm -rf %{buildroot}
 %{makeinstall_std}
 cp -a %{SOURCE1} %{buildroot}/%{_datadir}/%{name}/config
+
  
 %clean
 rm -rf %{buildroot}

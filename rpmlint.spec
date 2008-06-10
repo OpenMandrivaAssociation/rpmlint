@@ -22,12 +22,8 @@ Patch12: rpmlint-shared-lib-without-dependency-information_is_warning.patch
 Patch13: rpmlint_only-non-binary-in-usr-lib_is_warning.patch
 Patch14: rpmlint_update-menus-without-menu-file-in-_is_warning.patch
 Patch15: rpmlint.fix38157.diff 
-Requires: binutils
-Requires: gcc-cpp 
-Requires: python
-Requires: rpm-python
-BuildRequires: python
-BuildRequires: rpm-python
+Requires: python-rpm
+BuildRequires: python-rpm
 BuildArch: noarch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 

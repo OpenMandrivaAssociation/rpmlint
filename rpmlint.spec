@@ -7,9 +7,11 @@ Group: Development/Other
 URL: http://rpmlint.zarb.org/
 Source0: http://rpmlint.zarb.org/download/rpmlint-%{version}.tar.bz2
 Source1: rpmlint.config
+# misc, commited upstream
 Patch0:	rpmlint-0.81-rpm5.org-support.patch
 Patch1:	rpmlint-non-std-group_is_error.patch
 Patch2:	rpmlint-hardcoded-library-path_is_warning.patch
+# misc, commited upstream
 Patch3:	rpmlint-prereq-use_is_error.patch
 Patch4: rpmlint-non-executable-script_is_warning.patch
 Patch5: rpmlint-script-without-shebang_is_warning.patch

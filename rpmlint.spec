@@ -1,6 +1,6 @@
 Name: rpmlint
-Version: 0.81
-Release: %mkrel 12
+Version: 0.83
+Release: %mkrel 1
 Summary: RPM correctness checker
 License: GPLv2+
 Group: Development/Other
@@ -37,9 +37,9 @@ Binary and source packages can be checked.
 %patch1 -p0 -b .group
 %patch2 -p0 -b .libpath
 %patch3 -p0 -b .prereq
-%patch4 -p0 
+#%patch4 -p0 
 %patch5 -p0 
-%patch6 -p0 
+#%patch6 -p0 
 %patch7 -p0 
 %patch9 -p0 
 %patch10 -p0 
@@ -47,7 +47,7 @@ Binary and source packages can be checked.
 %patch12 -p0 
 %patch13 -p0 
 %patch14 -p0 
-%patch15 -p1
+#%patch15 -p1
 
 %build
 %{make}

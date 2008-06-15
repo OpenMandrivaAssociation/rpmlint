@@ -13,7 +13,6 @@ Patch2:	rpmlint-hardcoded-library-path_is_warning.patch
 Patch3:	rpmlint-prereq-use_is_error.patch
 Patch4: rpmlint-non-executable-script_is_warning.patch
 Patch5: rpmlint-script-without-shebang_is_warning.patch
-Patch6: rpmlint-non-standard-Xid_is_warning.patch
 Patch7: rpmlint-wrong-script-interpreter_is_warning.patch
 Patch9: rpmlint-statically-linked-binary_is_warning.patch
 Patch10: rpmlint-no-cleaning-of-buildroot_is_warning.patch
@@ -21,7 +20,6 @@ Patch11: rpmlint-invalid-lc-messages-dir_is_warning.patch
 Patch12: rpmlint-shared-lib-without-dependency-information_is_warning.patch
 Patch13: rpmlint_only-non-binary-in-usr-lib_is_warning.patch
 Patch14: rpmlint_update-menus-without-menu-file-in-_is_warning.patch
-Patch15: rpmlint.fix38157.diff 
 Requires: python-rpm
 BuildRequires: python-rpm
 BuildArch: noarch
@@ -39,7 +37,6 @@ Binary and source packages can be checked.
 %patch3 -p0 -b .prereq
 #%patch4 -p0 
 %patch5 -p0 
-#%patch6 -p0 
 %patch7 -p0 
 %patch9 -p0 
 %patch10 -p0 
@@ -47,7 +44,6 @@ Binary and source packages can be checked.
 %patch12 -p0 
 %patch13 -p0 
 %patch14 -p0 
-#%patch15 -p1
 
 %build
 %{make}

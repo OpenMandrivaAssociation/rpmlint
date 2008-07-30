@@ -1,5 +1,5 @@
 Name: rpmlint
-Version: 0.83
+Version: 0.84
 Release: %mkrel 1
 Summary: RPM correctness checker
 License: GPLv2+
@@ -7,12 +7,8 @@ Group: Development/Other
 URL: http://rpmlint.zarb.org/
 Source0: http://rpmlint.zarb.org/download/rpmlint-%{version}.tar.bz2
 Source1: rpmlint.config
-# misc, commited upstream
-Patch0:	rpmlint-0.81-rpm5.org-support.patch
 Patch1:	rpmlint-non-std-group_is_error.patch
 Patch2:	rpmlint-hardcoded-library-path_is_warning.patch
-# misc, commited upstream
-Patch3:	rpmlint-prereq-use_is_error.patch
 Patch4: rpmlint-non-executable-script_is_warning.patch
 Patch5: rpmlint-script-without-shebang_is_warning.patch
 Patch7: rpmlint-wrong-script-interpreter_is_warning.patch
@@ -33,10 +29,8 @@ Binary and source packages can be checked.
 
 %prep
 %setup -q
-%patch0 -p0 -b .rpm5
 %patch1 -p0 -b .group
 %patch2 -p0 -b .libpath
-%patch3 -p0 -b .prereq
 #%patch4 -p0 
 %patch5 -p0 
 %patch7 -p0 

@@ -1,5 +1,5 @@
 Name: rpmlint
-Version: 0.91
+Version: 0.92
 Release: %mkrel 1
 Summary: RPM correctness checker
 License: GPLv2+
@@ -8,6 +8,7 @@ URL: http://rpmlint.zarb.org/
 Source0: http://rpmlint.zarb.org/download/rpmlint-%{version}.tar.bz2
 Source1: rpmlint.config
 Requires: python-rpm python-magic
+Suggests:  python-enchant
 BuildRequires: python-rpm
 BuildArch: noarch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
@@ -20,6 +21,7 @@ Binary and source packages can be checked.
 %setup -q
 
 %build
+export COMPILE_PYC=1
 %{make}
 
 %install

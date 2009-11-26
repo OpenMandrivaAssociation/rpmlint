@@ -7,6 +7,7 @@ Group: Development/Other
 URL: http://rpmlint.zarb.org/
 Source0: http://rpmlint.zarb.org/download/rpmlint-%{version}.tar.bz2
 Source1: rpmlint.config
+Patch0: rpmlint-0.92-dont-hardcode-package-filename-format.patch
 Requires: python-rpm python-magic
 Suggests:  python-enchant
 BuildRequires: python-rpm
@@ -19,6 +20,7 @@ Binary and source packages can be checked.
 
 %prep
 %setup -q
+%patch0 -p0 -b .non_coherent_filename~
 
 %build
 export COMPILE_PYC=1

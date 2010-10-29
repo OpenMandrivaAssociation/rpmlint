@@ -1,6 +1,6 @@
 Name:    rpmlint
 Version: 0.95
-Release: %mkrel 1
+Release: %mkrel 2
 
 Summary: RPM correctness checker
 License: GPLv2+

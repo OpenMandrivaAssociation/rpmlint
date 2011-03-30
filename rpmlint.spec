@@ -1,21 +1,21 @@
-Name:    rpmlint
-Version: 1.0
-Release: %mkrel 1
+Name:		rpmlint
+Version:	1.1
+Release:	%mkrel 1
 
-Summary: RPM correctness checker
-License: GPLv2+
-Group:   Development/Other
+Summary:	RPM correctness checker
+License:	GPLv2+
+Group:		Development/Other
 
-URL:     http://rpmlint.zarb.org/
-Source0: http://rpmlint.zarb.org/download/rpmlint-%{version}.tar.bz2
-Source1: rpmlint.config
+URL:		http://rpmlint.zarb.org/
+Source0:	http://rpmlint.zarb.org/download/rpmlint-%{version}.tar.xz
+Source1:	rpmlint.config
 
-Requires: python-rpm python-magic desktop-file-utils
-Suggests:  python-enchant
+Requires:	python-rpm python-magic desktop-file-utils
+Suggests:	python-enchant
 
-BuildRequires: python-rpm
-BuildArch:     noarch
-BuildRoot:     %{_tmppath}/%{name}-%{version}-%{release}-root
+BuildRequires:	python-rpm
+BuildArch:	noarch
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 
 %description
 Rpmlint is a tool to check common errors on rpm packages.

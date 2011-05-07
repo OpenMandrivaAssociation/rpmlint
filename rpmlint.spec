@@ -1,6 +1,6 @@
 Name:		rpmlint
-Version:	1.1
-Release:	%mkrel 2
+Version:	1.2
+Release:	%mkrel 1
 
 Summary:	RPM correctness checker
 License:	GPLv2+
@@ -15,7 +15,6 @@ Suggests:	python-enchant
 
 BuildRequires:	python-rpm
 BuildArch:	noarch
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 
 %description
 Rpmlint is a tool to check common errors on rpm packages.
@@ -29,7 +28,6 @@ export COMPILE_PYC=1
 %{make}
 
 %install
-rm -rf %{buildroot}
 %{makeinstall_std}
 cp -a %{SOURCE1} %{buildroot}/%{_datadir}/%{name}/config
 

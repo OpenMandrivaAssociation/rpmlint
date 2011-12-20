@@ -1,6 +1,6 @@
 Name:		rpmlint
-Version:	1.2
-Release:	2
+Version:	1.4
+Release:	1
 
 Summary:	RPM correctness checker
 License:	GPLv2+

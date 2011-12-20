@@ -1,6 +1,6 @@
 Name:		rpmlint
 Version:	1.4
-Release:	1
+Release:	2
 
 Summary:	RPM correctness checker
 License:	GPLv2+
@@ -9,6 +9,8 @@ Group:		Development/Other
 URL:		http://rpmlint.zarb.org/
 Source0:	http://rpmlint.zarb.org/download/%{name}-%{version}.tar.xz
 Source1:	rpmlint.config
+
+Patch0:		rpmlint-1.4-fix-paths-to-extracted-srpm-files.patch
 
 Requires:	python-rpm python-magic desktop-file-utils
 Suggests:	python-enchant rpmlint-%{_target_vendor}-policy
@@ -22,6 +24,7 @@ Binary and source packages can be checked.
 
 %prep
 %setup -q
+%patch0 -p1 -b .srpm_paths~
 
 %build
 export COMPILE_PYC=1

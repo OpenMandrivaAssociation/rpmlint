@@ -12,6 +12,7 @@ Source1:	rpmlint.config
 
 Patch0:		rpmlint-1.4-fix-paths-to-extracted-srpm-files.patch
 Patch1:		rpmlint-1.4-add-lgplv21-license.patch
+Patch2:		rpmlint-1.4-below-threshold-returns-zero.patch
 
 Requires:	python-rpm python-magic desktop-file-utils
 Suggests:	python-enchant rpmlint-%{_target_vendor}-policy
@@ -27,6 +28,7 @@ Binary and source packages can be checked.
 %setup -q
 %patch0 -p1 -b .srpm_paths~
 %patch1 -p1 -b .lgplv21~
+%patch2 -p1 -b .threshold~
 
 %build
 export COMPILE_PYC=1

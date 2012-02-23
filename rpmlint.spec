@@ -1,6 +1,6 @@
 Name:		rpmlint
 Version:	1.4
-Release:	4
+Release:	5
 
 Summary:	RPM correctness checker
 License:	GPLv2+
@@ -13,6 +13,7 @@ Source1:	rpmlint.config
 Patch0:		rpmlint-1.4-fix-paths-to-extracted-srpm-files.patch
 Patch1:		rpmlint-1.4-add-lgplv21-license.patch
 Patch2:		rpmlint-1.4-below-threshold-returns-zero.patch
+Patch3:		rpmlint-1.4-fix-setup-checks.patch
 
 Requires:	python-rpm python-magic desktop-file-utils
 Suggests:	python-enchant rpmlint-%{_target_vendor}-policy
@@ -29,6 +30,7 @@ Binary and source packages can be checked.
 %patch0 -p1 -b .srpm_paths~
 %patch1 -p1 -b .lgplv21~
 %patch2 -p1 -b .threshold~
+%patch3 -p1 -b .setup~
 
 %build
 export COMPILE_PYC=1

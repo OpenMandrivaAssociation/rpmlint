@@ -1,6 +1,6 @@
 Name:		rpmlint
 Version:	1.4
-Release:	6
+Release:	7
 
 Summary:	RPM correctness checker
 License:	GPLv2+
@@ -15,6 +15,7 @@ Patch1:		rpmlint-1.4-add-lgplv21-license.patch
 Patch2:		rpmlint-1.4-below-threshold-returns-zero.patch
 Patch3:		rpmlint-1.4-fix-setup-checks.patch
 Patch4:		rpmlint-1.4-external-depfilter-with-internal-depgen.patch
+Patch5:		rpmlint-1.4-shared-lib-not-executable.patch
 
 Requires:	python-rpm python-magic desktop-file-utils
 Suggests:	python-enchant rpmlint-%{_target_vendor}-policy
@@ -33,6 +34,7 @@ Binary and source packages can be checked.
 %patch2 -p1 -b .threshold~
 %patch3 -p1 -b .setup~
 %patch4 -p1 -b .dep_filter~
+%patch5 -p1 -b .shlib_exec~
 
 %build
 export COMPILE_PYC=1

@@ -19,6 +19,7 @@ Patch5:		rpmlint-1.4-shared-lib-not-executable.patch
 # proper fix for rhbz#487855
 Patch6:		rpmlint-1.4-only-report-actual-errors-as-spec_error.patch
 Patch7:		rpmlint-1.4-install-info-trigger.patch
+Patch8:		rpmlint-1.4-legacy-mandriva-filetriggers.patch
 
 Requires:	python-rpm python-magic desktop-file-utils
 Suggests:	python-enchant rpmlint-%{_target_vendor}-policy
@@ -40,6 +41,7 @@ Binary and source packages can be checked.
 %patch5 -p1 -b .shlib_exec~
 %patch6 -p1 -b .spec_error~
 %patch7 -p1 -b .info~
+%patch8 -p1 -b .triggers~
 
 %build
 export COMPILE_PYC=1

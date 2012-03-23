@@ -1,6 +1,6 @@
 Name:		rpmlint
 Version:	1.4
-Release:	10
+Release:	11
 
 Summary:	RPM correctness checker
 License:	GPLv2+
@@ -20,6 +20,7 @@ Patch5:		rpmlint-1.4-shared-lib-not-executable.patch
 Patch6:		rpmlint-1.4-only-report-actual-errors-as-spec_error.patch
 Patch7:		rpmlint-1.4-install-info-trigger.patch
 Patch8:		rpmlint-1.4-legacy-mandriva-filetriggers.patch
+Patch9:		rpmlint-1.4-double-slash-in-path.patch
 
 Requires:	python-rpm python-magic desktop-file-utils
 Suggests:	python-enchant rpmlint-%{_target_vendor}-policy
@@ -42,6 +43,7 @@ Binary and source packages can be checked.
 %patch6 -p1 -b .spec_error~
 %patch7 -p1 -b .info~
 %patch8 -p1 -b .triggers~
+%patch9 -p1 -b .slash~
 
 %build
 export COMPILE_PYC=1

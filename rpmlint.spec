@@ -21,6 +21,7 @@ Patch6:		rpmlint-1.4-only-report-actual-errors-as-spec_error.patch
 Patch7:		rpmlint-1.4-install-info-trigger.patch
 Patch8:		rpmlint-1.4-legacy-mandriva-filetriggers.patch
 Patch9:		rpmlint-1.4-double-slash-in-path.patch
+Patch10:	rpmlint-1.4-make-tests-pass.patch
 
 Requires:	python-rpm python-magic desktop-file-utils
 Suggests:	python-enchant rpmlint-%{_target_vendor}-policy
@@ -44,10 +45,14 @@ Binary and source packages can be checked.
 %patch7 -p1 -b .info~
 %patch8 -p1 -b .triggers~
 %patch9 -p1 -b .slash~
+%patch10 -p1 -b .test~
 
 %build
 export COMPILE_PYC=1
 %make
+
+%check
+make check
 
 %install
 %makeinstall_std

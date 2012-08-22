@@ -1,6 +1,6 @@
 Name:		rpmlint
 Version:	1.4
-Release:	14
+Release:	15
 
 Summary:	RPM correctness checker
 License:	GPLv2+
@@ -24,6 +24,7 @@ Patch9:		rpmlint-1.4-double-slash-in-path.patch
 Patch10:	rpmlint-1.4-make-tests-pass.patch
 Patch11:	rpmlint-1.4-dont-check-use-of-RPM_SOURCE_DIR-in-changelog.patch
 Patch12:	rpmlint-1.4-dont-use-_RPMVSF_NOSIGNATURES.patch
+Patch14:        rpmlint-1.4-incoherent-pkgname-description.patch
 
 Requires:	python-rpm python-magic desktop-file-utils
 Suggests:	python-enchant rpmlint-%{_target_vendor}-policy
@@ -50,6 +51,7 @@ Binary and source packages can be checked.
 %patch10 -p1 -b .test~
 %patch11 -p1 -b .sourcedir_changelog~
 %patch12 -p1 -b .nosig~
+%patch14 -p1 -b .pkgname~
 
 %build
 export COMPILE_PYC=1

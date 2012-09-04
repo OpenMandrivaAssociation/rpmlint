@@ -1,5 +1,6 @@
 Name:		rpmlint
 Version:	1.4
+Release:	16
 Release:	15
 
 Summary:	RPM correctness checker

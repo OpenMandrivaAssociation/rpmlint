@@ -1,0 +1,31 @@
+--- rpmlint-1.4/FilesCheck.py.triggers~	2012-03-22 02:32:50.471503834 +0100
++++ rpmlint-1.4/FilesCheck.py	2012-03-22 02:41:22.591274461 +0100
+@@ -221,6 +221,7 @@ meta_package_regex = re.compile(Config.g
+ filesys_packages = ['filesystem'] # TODO: make configurable?
+ quotes_regex = re.compile('[\'"]+')
+ install_info_triggers = Config.getOption('InstallInfoTriggers', False)
++legacy_mandriva_filetriggers = re.compile('^/var/lib/rpm/filetriggers/.*\.(filter|script)$')
+ 
+ for idx in range(0, len(dangling_exceptions)):
+     dangling_exceptions[idx][0] = re.compile(dangling_exceptions[idx][0])
+@@ -948,6 +949,9 @@ class FilesCheck(AbstractCheck.AbstractC
+                 if stat.S_IWGRP & mode or stat.S_IWOTH & mode:
+                     printError(pkg, 'non-owner-writeable-only-crontab-file', f)
+ 
++            if legacy_mandriva_filetriggers.search(f):
++                printWarning(pkg, 'legacy-mandriva-filetriggers', f)
++
+         if log_file and not logrotate_file:
+             printWarning(pkg, 'log-files-without-logrotate', log_file)
+ 
+@@ -1352,6 +1356,10 @@ as intended.''',
+ '''The Free Software Foundation address in this file seems to be outdated or
+ misspelled.  Ask upstream to update the address, or if this is a license file,
+ possibly the entire file with a new copy available from the FSF.''',
++
++'legacy-mandriva-filetriggers',
++'''This package provides legacy Mandriva file triggers. These triggers should
++now be replaced by native rpm file triggers.'''
+ )
+ 
+ # FilesCheck.py ends here

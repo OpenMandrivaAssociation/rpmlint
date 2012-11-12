@@ -1,0 +1,11 @@
+--- rpmlint-1.4/TagsCheck.py.lgplv21~	2011-12-21 22:50:07.729678407 +0100
++++ rpmlint-1.4/TagsCheck.py	2011-12-21 22:50:10.891671415 +0100
+@@ -72,6 +72,8 @@ DEFAULT_VALID_LICENSES = (
+     'GPLv3+',
+     'LGPLv2',
+     'LGPLv2+',
++    'LGPLv2.1',
++    'LGPLv2.1+',
+     'LGPLv3',
+     'LGPLv3+',
+     'Historical Permission Notice and Disclaimer',

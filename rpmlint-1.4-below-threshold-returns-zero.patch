@@ -1,0 +1,74 @@
+--- rpmlint-1.4/rpmlint.threshold~	2011-12-22 06:39:43.850643443 +0100
++++ rpmlint-1.4/rpmlint	2011-12-22 07:33:44.707498938 +0100
+@@ -91,6 +91,7 @@ def main():
+ 
+     packages_checked = 0
+     specfiles_checked = 0
++    threshold_exceeded = False
+     do_spec_check = 'SpecCheck' in Config.allChecks()
+     if do_spec_check:
+         # See comments in "top level import section" for why this isn't
+@@ -203,17 +204,24 @@ def main():
+                 continue
+ 
+         if printAllReasons():
+-            Pkg.warn('(none): E: badness %d exceeds threshold %d, aborting.' %
+-                     (badnessScore(), badnessThreshold()))
+-            sys.exit(66)
++            if below_threshold_returns_zero:
++                threshold_exceeded = True
++            else:
++                Pkg.warn('(none): E: badness %d exceeds threshold %d, aborting.' %
++                        (badnessScore(), badnessThreshold()))
++                sys.exit(66)
+ 
+     finally:
+         print "%d packages and %d specfiles checked; %d errors, %d warnings." \
+               % (packages_checked, specfiles_checked,
+                  printed_messages["E"], printed_messages["W"])
+ 
+-    if printed_messages["E"] > 0:
++    if not below_threshold_returns_zero and printed_messages["E"] > 0:
+         sys.exit(64)
++    if below_threshold_returns_zero and threshold_exceeded:
++        Pkg.warn('(none): E: badness %d exceeds threshold %d.' %
++                        (badnessScore(), badnessThreshold()))
++        sys.exit(66)
+     sys.exit(0)
+ 
+ def runChecks(pkg):
+@@ -241,7 +249,7 @@ sys.argv[0] = os.path.basename(sys.argv[
+ # parse options
+ try:
+     (opt, args) = getopt.getopt(sys.argv[1:],
+-                              'iI:c:C:hVvanE:f:o:',
++                              'iI:c:C:hVvanE:f:o:T',
+                               ['info',
+                                'explain=',
+                                'check=',
+@@ -255,6 +263,7 @@ try:
+                                'file=',
+                                'option=',
+                                'rawout=',
++                               'zerothreshold',
+                                ])
+ except getopt.GetoptError, e:
+     Pkg.warn("%s: %s" % (sys.argv[0], e))
+@@ -271,6 +280,7 @@ if not os.path.exists(os.path.expanduser
+     # deprecated backwards compatibility with < 0.88
+     conf_file = '~/.rpmlintrc'
+ info_error = set()
++below_threshold_returns_zero = False
+ 
+ # load global config files
+ configs = glob.glob('/etc/rpmlint/*config')
+@@ -325,6 +335,9 @@ for o in opt:
+         Config.setOption('ExtractDir', extract_dir)
+     elif o[0] in ('-n', '--noexception'):
+         Config.no_exception = True
++    # terrible longname, but whatever..
++    elif o[0] in ('-T', 'zerothreshold'):
++        below_threshold_returns_zero = True
+     elif o[0] in ('-a', '--all'):
+         if '*' not in args:
+             args.append('*')

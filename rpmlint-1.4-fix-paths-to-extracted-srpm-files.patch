@@ -1,0 +1,18 @@
+--- rpmlint-1.4/SpecCheck.py.srpm_paths~	2011-11-23 21:21:05.000000000 +0100
++++ rpmlint-1.4/SpecCheck.py	2011-12-21 00:55:46.153718537 +0100
+@@ -140,7 +140,15 @@ class SpecCheck(AbstractCheck.AbstractCh
+                 printError(pkg, "invalid-spec-name")
+ 
+             # check content of spec file
++            if pkg.isSource():
++                oldvals = { '_icondir' : None, '_patchdir' : None, '_sourcedir' : None, '_specdir' : None }
++                for key in oldvals.keys():
++                    oldvals[key] = rpm.expandMacro("%" + key)
++                    rpm.addMacro(key, pkg.dirName())
+             self.check_spec(pkg, self._spec_file)
++            if pkg.isSource():
++                for key in oldvals.keys():
++                    rpm.addMacro(key, oldvals[key])
+ 
+     def check_spec(self, pkg, spec_file, spec_lines=[]):
+         self._spec_file = spec_file

@@ -1,0 +1,42 @@
+--- rpmlint-1.4/FilesCheck.py.slash~	2012-03-23 07:50:32.373626878 +0100
++++ rpmlint-1.4/FilesCheck.py	2012-03-23 07:51:12.099686447 +0100
+@@ -222,6 +222,7 @@ filesys_packages = ['filesystem'] # TODO
+ quotes_regex = re.compile('[\'"]+')
+ install_info_triggers = Config.getOption('InstallInfoTriggers', False)
+ legacy_mandriva_filetriggers = re.compile('^/var/lib/rpm/filetriggers/.*\.(filter|script)$')
++pkgconfig_regex = re.compile('^/usr/lib(64)?/pkgconfig/.*\.pc$')
+ 
+ for idx in range(0, len(dangling_exceptions)):
+     dangling_exceptions[idx][0] = re.compile(dangling_exceptions[idx][0])
+@@ -952,6 +953,16 @@ class FilesCheck(AbstractCheck.AbstractC
+             if legacy_mandriva_filetriggers.search(f):
+                 printWarning(pkg, 'legacy-mandriva-filetriggers', f)
+ 
++            if pkgconfig_regex.search(f):
++                chunk = None
++                istext = False
++                if os.access(pkgfile.path, os.R_OK):
++                    (chunk, istext) = peek(pkgfile.path, pkg, 2048)
++                    if istext:
++                        for line in chunk.splitlines():
++                            if line.find('//') >= 0 and not line.find('://') >= 0:
++                                printError(pkg, 'double-slash-in-path', f, line)
++
+         if log_file and not logrotate_file:
+             printWarning(pkg, 'log-files-without-logrotate', log_file)
+ 
+@@ -1359,7 +1370,13 @@ possibly the entire file with a new copy
+ 
+ 'legacy-mandriva-filetriggers',
+ '''This package provides legacy Mandriva file triggers. These triggers should
+-now be replaced by native rpm file triggers.'''
++now be replaced by native rpm file triggers.''',
++
++'double-slash-in-path',
++'''This pkg-config file contains a path with double slash ('//') in it. This
++will break debugedit when stripping debug symbols during package building if
++these paths has been passed to gcc, and fail with the following error:
++"canonicalization unexpectedly shrank by one character"''',
+ )
+ 
+ # FilesCheck.py ends here

@@ -1,0 +1,38 @@
+--- rpmlint-1.4/SpecCheck.py.dep_filter~	2012-03-01 23:15:50.817609079 +0100
++++ rpmlint-1.4/SpecCheck.py	2012-03-01 23:16:14.912621089 +0100
+@@ -76,6 +76,7 @@ scriptlet_requires_regex = re.compile('^
+ 
+ depscript_override_regex = re.compile('(^|\s)%(define|global)\s+__find_(requires|provides)\s')
+ depgen_disable_regex = re.compile('(^|\s)%(define|global)\s+_use_internal_dependency_generator\s+0')
++external_depfilters = ('_exclude_files_from_autoprov','_exclude_files_from_autoreq','_provides_exceptions','_requires_exceptions')
+ 
+ # See https://bugzilla.redhat.com/488146 for details
+ indent_spaces_regex = re.compile('( \t|(^|\t)([^\t]{8})*[^\t]{4}[^\t]?([^\t][^\t.!?]|[^\t]?[.!?] )  )')
+@@ -589,6 +590,16 @@ class SpecCheck(AbstractCheck.AbstractCh
+                                                   url, cmd5))
+                     elif srctype == "Source" and tarball_regex.search(url):
+                         printWarning(pkg, 'invalid-url', '%s:' % tag, url)
++                try:
++                    # rpm > 5.4.7
++                    macros = spec_obj.macros()
++                    if rpm.expandMacro('_use_internal_dependency_generator'):
++                        for key in external_depfilters:
++                            if key in macros:
++                                printWarning(pkg, 'external-depfilter-with-internal-depgen', key)
++                except AttributeError:
++                    pass
++
+ 
+ # Create an object to enable the auto registration of the test
+ check = SpecCheck()
+@@ -745,6 +756,10 @@ __find_requires has no effect if rpm's i
+ been disabled for the build.  %define _use_internal_dependency_generator to 0
+ to disable it in the specfile, or don't define __find_provides/requires.''',
+ 
++'external-depfilter-with-internal-depgen',
++'''If the internal dependency generator is enabled, the variables for use with
++the external dependency generator cannot be used.''',
++
+ 'mixed-use-of-spaces-and-tabs',
+ '''The specfile mixes use of spaces and tabs for indentation, which is a
+ cosmetic annoyance.  Use either spaces or tabs for indentation, not both.''',

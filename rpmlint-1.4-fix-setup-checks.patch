@@ -1,0 +1,11 @@
+--- rpmlint-1.4/SpecCheck.py.setup~	2012-02-23 13:04:19.786915750 +0100
++++ rpmlint-1.4/SpecCheck.py	2012-02-23 13:04:27.574919632 +0100
+@@ -252,7 +252,7 @@ class SpecCheck(AbstractCheck.AbstractCh
+             if if_regex.search(line):
+                 if_depth = if_depth + 1
+ 
+-            if line.startswith('%setup'):
++            if line.strip() == '%setup' or line.startswith('%setup '):
+                 if not setup_q_regex.search(line):
+                     # Don't warn if there's a -T without -a or -b
+                     if setup_t_regex.search(line):

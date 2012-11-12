@@ -1,0 +1,11 @@
+--- rpmlint-1.4/SpecCheck.py.sourcedir_changelog~	2012-03-26 22:38:12.370345182 +0200
++++ rpmlint-1.4/SpecCheck.py	2012-03-26 22:38:21.002357036 +0200
+@@ -284,7 +284,7 @@ class SpecCheck(AbstractCheck.AbstractCh
+                     applied_patches.append(pnum)
+                     if ifarch_depth > 0:
+                         applied_patches_ifarch.append(pnum)
+-            if not res and not source_dir:
++            if not res and not source_dir and current_section != "changelog":
+                 res = source_dir_regex.search(line)
+                 if res:
+                     source_dir = True

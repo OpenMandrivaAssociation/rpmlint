@@ -1,0 +1,11 @@
+--- rpmlint-1.4.orig/TagsCheck.py	2012-08-22 19:24:47.348453025 +0400
++++ rpmlint-1.4/TagsCheck.py	2012-08-22 19:26:23.174561290 +0400
+@@ -951,7 +951,7 @@
+ 
+ 'non-coherent-filename',
+ '''The file which contains the package should be named
+-<NAME>-<VERSION>-<RELEASE>.<ARCH>.rpm.''',
++<NAME>-<VERSION>-<RELEASE>-<DISTSUFFIX><DISTEPOCH>.<ARCH>.rpm.''',
+ 
+ 'no-dependency-on',
+ '''

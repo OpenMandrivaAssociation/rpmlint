@@ -1,10 +1,10 @@
 Name:		rpmlint
 Version:	1.4
-Release:	16
+Release:	25
 
 Summary:	RPM correctness checker
 License:	GPLv2+
-Group:		Development/Other
+Group:		Development/System
 
 URL:		http://rpmlint.zarb.org/
 Source0:	http://rpmlint.zarb.org/download/%{name}-%{version}.tar.xz
@@ -24,7 +24,9 @@ Patch9:		rpmlint-1.4-double-slash-in-path.patch
 Patch10:	rpmlint-1.4-make-tests-pass.patch
 Patch11:	rpmlint-1.4-dont-check-use-of-RPM_SOURCE_DIR-in-changelog.patch
 Patch12:	rpmlint-1.4-dont-use-_RPMVSF_NOSIGNATURES.patch
-Patch14:        rpmlint-1.4-incoherent-pkgname-description.patch
+Patch13:        rpmlint-1.4-encoding.patch
+Patch14:	rpmlint-1.4-incoherent-pkgname-description.patch
+Patch15:	rpmlint-1.4-only-report-non-versioned-files-for-libs.patch
 
 Requires:	python-rpm python-magic desktop-file-utils
 Suggests:	python-enchant rpmlint-%{_target_vendor}-policy
@@ -51,7 +53,9 @@ Binary and source packages can be checked.
 %patch10 -p1 -b .test~
 %patch11 -p1 -b .sourcedir_changelog~
 %patch12 -p1 -b .nosig~
-%patch14 -p1 -b .pkgname~
+%patch13 -p1
+%patch14 -p1
+%patch15 -p0
 
 %build
 export COMPILE_PYC=1
@@ -65,7 +69,7 @@ make check
 
 install -m644 %{SOURCE1} -D %{buildroot}%{_datadir}/%{name}/config
 install -d %{buildroot}%{_datadir}/%{name}/config.d/
- 
+
 %files
 %doc ChangeLog README*
 %{_bindir}/*
@@ -74,3 +78,11 @@ install -d %{buildroot}%{_datadir}/%{name}/config.d/
 %config(noreplace) %{_sysconfdir}/%{name}/config
 %config(noreplace) %{_sysconfdir}/bash_completion.d/%{name}
 %dir %{_sysconfdir}/%{name}/
+
+
+%changelog
+* Thu May 17 2012 Per Øyvind Karlsen <peroyvind@mandriva.org> 1.4-14
++ Revision: 799355
+- don't use _RPMVSF_NOSIGNATURES constant which is no longer part of of public
+  rpm >= 5.4.9 api (P12)
+

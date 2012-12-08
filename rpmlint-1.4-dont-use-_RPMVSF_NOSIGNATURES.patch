@@ -5,7 +5,7 @@
              ts = rpm.TransactionSet()
              # Don't check signatures here...
 -            ts.setVSFlags(rpm._RPMVSF_NOSIGNATURES)
-+            ts.setVSFlags(rpm.RPMVSF_NODSAHEADER | rpm.RPMVSF_NORSAHEADER | rpm.RPMVSF_NODSA | rpm.RPMVSF_NORSA)
++            ts.setVSFlags(rpm.RPMVSF_NODSAHEADER | rpm.RPMVSF_NORSAHEADER |	rpm.RPMVSF_NODSA | rpm.RPMVSF_NORSA)
              fd = os.open(filename, os.O_RDONLY)
              try:
                  self.header = ts.hdrFromFdno(fd)

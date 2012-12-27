@@ -1,10 +1,10 @@
 Name:		rpmlint
 Version:	1.4
-Release:	25
+Release:	26
 
 Summary:	RPM correctness checker
 License:	GPLv2+
-Group:		Development/System
+Group:		Development/Other
 
 URL:		http://rpmlint.zarb.org/
 Source0:	http://rpmlint.zarb.org/download/%{name}-%{version}.tar.xz
@@ -27,6 +27,7 @@ Patch12:	rpmlint-1.4-dont-use-_RPMVSF_NOSIGNATURES.patch
 Patch13:        rpmlint-1.4-encoding.patch
 Patch14:	rpmlint-1.4-incoherent-pkgname-description.patch
 Patch15:	rpmlint-1.4-only-report-non-versioned-files-for-libs.patch
+Patch16:	rpmlint-1.4-dont-barf-on-missing-locales.patch
 
 Requires:	python-rpm python-magic desktop-file-utils
 Suggests:	python-enchant rpmlint-%{_target_vendor}-policy
@@ -56,6 +57,7 @@ Binary and source packages can be checked.
 %patch13 -p1
 %patch14 -p1
 %patch15 -p0
+%patch16 -p1 -b .locales~
 
 %build
 export COMPILE_PYC=1
@@ -76,8 +78,11 @@ install -d %{buildroot}%{_datadir}/%{name}/config.d/
 %{_datadir}/%{name}
 %{_mandir}/man1/*
 %config(noreplace) %{_sysconfdir}/%{name}/config
-%config(noreplace) %{_sysconfdir}/bash_completion.d/%{name}
 %dir %{_sysconfdir}/%{name}/
+# Which of these exists depends on the version of bash_completion.
+# Let's support both.
+%optional %config(noreplace) %_sysconfdir/bash_completion.d/*
+%optional %config(noreplace) %_datadir/bash-completion/completions/*
 
 
 %changelog

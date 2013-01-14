@@ -1,5 +1,5 @@
---- rpmlint-1.4/SpecCheck.py.apply_patches~	2013-01-14 12:38:19.669569727 +0100
-+++ rpmlint-1.4/SpecCheck.py	2013-01-14 12:37:57.568343633 +0100
+--- rpmlint-1.4/SpecCheck.py.apply_patches~	2013-01-14 13:10:05.098720747 +0100
++++ rpmlint-1.4/SpecCheck.py	2013-01-14 13:35:49.499189848 +0100
 @@ -34,6 +34,7 @@ patch_regex = re.compile("^Patch(\d*)\s*
  applied_patch_regex = re.compile("^%patch(\d*)")
  applied_patch_p_regex = re.compile("\s-P\s+(\d+)\\b")
@@ -8,16 +8,25 @@
  source_dir_regex = re.compile("^[^#]*(\$RPM_SOURCE_DIR|%{?_sourcedir}?)")
  obsolete_tags_regex = re.compile("^(Copyright|Serial)\s*:\s*(\S+)")
  buildroot_regex = re.compile('^BuildRoot\s*:\s*(\S+)', re.IGNORECASE)
-@@ -269,6 +270,8 @@ class SpecCheck(AbstractCheck.AbstractCh
+@@ -159,6 +160,7 @@ class SpecCheck(AbstractCheck.AbstractCh
+         patches = {}
+         applied_patches = []
+         applied_patches_ifarch = []
++        apply_patches = False
+         source_dir = False
+         buildroot = False
+         configure_linenum = None
+@@ -269,6 +271,9 @@ class SpecCheck(AbstractCheck.AbstractCh
                      ifarch_depth = -1
                  if_depth = if_depth - 1
  
-+            apply_patches = apply_patches_regex.search(line)
++            if not apply_patches and apply_patches_regex.search(line):
++                apply_patches = True
 +
              res = applied_patch_regex.search(line)
              if res:
                  pnum = res.group(1) or 0
-@@ -509,13 +512,14 @@ class SpecCheck(AbstractCheck.AbstractCh
+@@ -509,13 +514,14 @@ class SpecCheck(AbstractCheck.AbstractCh
              pkg.current_linenum = None
  
          # process gathered info
@@ -33,9 +42,9 @@
 +                if pnum in applied_patches_ifarch:
 +                    printWarning(pkg, "%ifarch-applied-patch", "Patch%d:" % pnum,
 +                            pfile)
-+                    if pnum not in applied_patches:
-+                        printWarning(pkg, "patch-not-applied", "Patch%d:" % pnum,
-+                                pfile)
++                if pnum not in applied_patches:
++                    printWarning(pkg, "patch-not-applied", "Patch%d:" % pnum,
++                            pfile)
  
          # Rest of the checks require a real spec file
          if not self._spec_file:

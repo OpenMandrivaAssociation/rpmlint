@@ -1,0 +1,41 @@
+--- rpmlint-1.4/SpecCheck.py.apply_patches~	2013-01-14 12:38:19.669569727 +0100
++++ rpmlint-1.4/SpecCheck.py	2013-01-14 12:37:57.568343633 +0100
+@@ -34,6 +34,7 @@ patch_regex = re.compile("^Patch(\d*)\s*
+ applied_patch_regex = re.compile("^%patch(\d*)")
+ applied_patch_p_regex = re.compile("\s-P\s+(\d+)\\b")
+ applied_patch_pipe_regex = re.compile(r'\s%\{PATCH(\d+)\}\s*\|\s*(%\{?__)?patch\b')
++apply_patches_regex = re.compile("^%apply_patches")
+ source_dir_regex = re.compile("^[^#]*(\$RPM_SOURCE_DIR|%{?_sourcedir}?)")
+ obsolete_tags_regex = re.compile("^(Copyright|Serial)\s*:\s*(\S+)")
+ buildroot_regex = re.compile('^BuildRoot\s*:\s*(\S+)', re.IGNORECASE)
+@@ -269,6 +270,8 @@ class SpecCheck(AbstractCheck.AbstractCh
+                     ifarch_depth = -1
+                 if_depth = if_depth - 1
+ 
++            apply_patches = apply_patches_regex.search(line)
++
+             res = applied_patch_regex.search(line)
+             if res:
+                 pnum = res.group(1) or 0
+@@ -509,13 +512,14 @@ class SpecCheck(AbstractCheck.AbstractCh
+             pkg.current_linenum = None
+ 
+         # process gathered info
+-        for pnum, pfile in patches.items():
+-            if pnum in applied_patches_ifarch:
+-                printWarning(pkg, "%ifarch-applied-patch", "Patch%d:" % pnum,
+-                             pfile)
+-            if pnum not in applied_patches:
+-                printWarning(pkg, "patch-not-applied", "Patch%d:" % pnum,
+-                             pfile)
++        if not apply_patches:
++            for pnum, pfile in patches.items():
++                if pnum in applied_patches_ifarch:
++                    printWarning(pkg, "%ifarch-applied-patch", "Patch%d:" % pnum,
++                            pfile)
++                    if pnum not in applied_patches:
++                        printWarning(pkg, "patch-not-applied", "Patch%d:" % pnum,
++                                pfile)
+ 
+         # Rest of the checks require a real spec file
+         if not self._spec_file:

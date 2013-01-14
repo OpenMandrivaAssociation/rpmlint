@@ -1,0 +1,29 @@
+--- rpmlint-1.4/BinariesCheck.py.usrlib_ldd~	2013-01-14 12:05:39.855392938 +0100
++++ rpmlint-1.4/BinariesCheck.py	2013-01-14 12:05:45.443450274 +0100
+@@ -168,6 +168,14 @@ class BinaryInfo:
+                         else:
+                             in_unused = False
+ 
++        if not is_ar and not is_debug and (path.startswith('/bin') \
++                or path.startswith('/lib') or path.startswith('/sbin')):
++            res = Pkg.getstatusoutput(
++                ('env', 'LC_ALL=C', 'ldd', path))
++            for l in res[1].splitlines():
++                if '/usr' in l:
++                    printError(pkg, 'links-against-library-in-usr', file)
++
+ path_regex = re.compile('(.*/)([^/]+)')
+ numeric_dir_regex = re.compile('/usr(?:/share)/man/man./(.*)\.[0-9](?:\.gz|\.bz2)')
+ versioned_dir_regex = re.compile('[^.][0-9]')
+@@ -566,6 +574,11 @@ http://bugs.debian.org/cgi-bin/bugreport
+ 'non-position-independent-executable',
+ '''This executable must be position independent.  Check that it is built with
+ -fPIE/-fpie in compiler flags and -pie in linker flags.''',
++
++'links-against-library-in-usr',
++'''Libraries and executables under /bin, /sbin, /lib and /lib64 may not link
++against libraries located under /usr as this might be a different partition
++not necessarily mounted at same time, ie. such as during boot.''',
+ )
+ 
+ # BinariesCheck.py ends here

@@ -28,6 +28,7 @@ Patch13:	rpmlint-1.4-encoding.patch
 Patch14:	rpmlint-1.4-incoherent-pkgname-description.patch
 Patch15:	rpmlint-1.4-only-report-non-versioned-files-for-libs.patch
 Patch16:	rpmlint-1.4-dont-barf-on-missing-locales.patch
+Patch17:	rpmlint-1.4-links-against-library-in-usr.patch
 
 Requires:	python-rpm python-magic desktop-file-utils
 Suggests:	python-enchant rpmlint-%{_target_vendor}-policy
@@ -58,6 +59,7 @@ Binary and source packages can be checked.
 %patch14 -p1
 %patch15 -p0
 %patch16 -p1 -b .locales~
+%patch17 -p1 -b .usrlib_ldd~
 
 %build
 export COMPILE_PYC=1

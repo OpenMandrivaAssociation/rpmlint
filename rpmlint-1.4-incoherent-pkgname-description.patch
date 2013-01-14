@@ -5,7 +5,7 @@
  'non-coherent-filename',
  '''The file which contains the package should be named
 -<NAME>-<VERSION>-<RELEASE>.<ARCH>.rpm.''',
-+<NAME>-<VERSION>-<RELEASE>-<DISTSUFFIX><DISTEPOCH>.<ARCH>.rpm.''',
++<NAME>-<VERSION>-<RELEASE>-<DISTTAG><DISTEPOCH>.<ARCH>.rpm.''',
  
  'no-dependency-on',
  '''

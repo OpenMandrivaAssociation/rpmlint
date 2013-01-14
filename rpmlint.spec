@@ -1,6 +1,6 @@
 Name:		rpmlint
 Version:	1.4
-Release:	26
+Release:	27
 
 Summary:	RPM correctness checker
 License:	GPLv2+
@@ -83,11 +83,3 @@ install -d %{buildroot}%{_datadir}/%{name}/config.d/
 # Let's support both.
 %optional %config(noreplace) %_sysconfdir/bash_completion.d/*
 %optional %config(noreplace) %_datadir/bash-completion/completions/*
-
-
-%changelog
-* Thu May 17 2012 Per Øyvind Karlsen <peroyvind@mandriva.org> 1.4-14
-+ Revision: 799355
-- don't use _RPMVSF_NOSIGNATURES constant which is no longer part of of public
-  rpm >= 5.4.9 api (P12)
-

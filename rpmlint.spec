@@ -24,7 +24,7 @@ Patch9:		rpmlint-1.4-double-slash-in-path.patch
 Patch10:	rpmlint-1.4-make-tests-pass.patch
 Patch11:	rpmlint-1.4-dont-check-use-of-RPM_SOURCE_DIR-in-changelog.patch
 Patch12:	rpmlint-1.4-dont-use-_RPMVSF_NOSIGNATURES.patch
-Patch13:        rpmlint-1.4-encoding.patch
+Patch13:	rpmlint-1.4-encoding.patch
 Patch14:	rpmlint-1.4-incoherent-pkgname-description.patch
 Patch15:	rpmlint-1.4-only-report-non-versioned-files-for-libs.patch
 Patch16:	rpmlint-1.4-dont-barf-on-missing-locales.patch

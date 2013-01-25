@@ -1,0 +1,11 @@
+--- rpmlint-1.4/TagsCheck.py.bero	2013-01-25 12:29:10.188579424 +0100
++++ rpmlint-1.4/TagsCheck.py	2013-01-25 12:30:15.757787929 +0100
+@@ -750,7 +750,7 @@ class TagsCheck(AbstractCheck.AbstractCh
+             if clt:
+                 changelog = changelog + clt
+             if use_utf8 and not Pkg.is_utf8_str(' '.join(changelog)):
+-                printError(pkg, 'tag-not-utf8', '%changelog')
++                printWarning(pkg, 'tag-not-utf8', '%changelog')
+ 
+             clt = pkg[rpm.RPMTAG_CHANGELOGTIME][0]
+             if clt:

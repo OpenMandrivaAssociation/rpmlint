@@ -1,6 +1,6 @@
 Name:		rpmlint
 Version:	1.4
-Release:	30
+Release:	31
 
 Summary:	RPM correctness checker
 License:	GPLv2+
@@ -65,7 +65,7 @@ Binary and source packages can be checked.
 %patch17 -p1 -b .usrlib_ldd~
 %patch18 -p1 -b .apply_patches~
 %patch19 -p1 -b .utf8changelog~
-# %patch20 -p0
+%patch20 -p0 -b .subpackage_desc_line~
 
 %build
 export COMPILE_PYC=1

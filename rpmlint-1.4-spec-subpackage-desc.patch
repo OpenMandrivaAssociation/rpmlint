@@ -1,5 +1,5 @@
---- SpecCheck.py.orig	2013-04-22 13:19:41.011040011 +0400
-+++ SpecCheck.py	2013-04-22 13:17:37.867028290 +0400
+--- SpecCheck.py.orig	2013-05-23 11:06:45.190475859 +0400
++++ SpecCheck.py	2013-05-23 11:09:55.668744646 +0400
 @@ -17,7 +17,7 @@
  import rpm
  
@@ -13,7 +13,7 @@
  
                  continue
  
-+            if current_section == 'description':
++            if current_section == 'description' and not re.match(r'^\s*#', line):
 +                utf8line = line[:-1]
 +                if use_utf8:
 +                    utf8line = Pkg.to_utf8(utf8line).decode('utf-8')

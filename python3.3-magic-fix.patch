@@ -1,0 +1,13 @@
+diff --git a/FilesCheck.py b/FilesCheck.py
+index 21041dc..bbe6cc8 100644
+--- a/FilesCheck.py
++++ b/FilesCheck.py
+@@ -300,7 +300,7 @@ _python_magic_values = {
+     '3.0': 3130,
+     '3.1': 3150,
+     '3.2': 3180,
+-    '3.3': 3190,
++    '3.3': 3230,
+     }
+ 
+ def get_expected_pyc_magic(path):

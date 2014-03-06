@@ -1,6 +1,6 @@
 Name:		rpmlint
 Version:	1.4
-Release:	37
+Release:	38
 
 Summary:	RPM correctness checker
 License:	GPLv2+
@@ -33,6 +33,7 @@ Patch18:	rpmlint-1.4-apply-patches-macro-disables-patch-not-applied-check.patch
 Patch19:	rpmlint-non-utf8-in-changelog-warning.patch
 Patch20:        rpmlint-1.4-spec-subpackage-desc.patch
 Patch21:	rpmlint-1.4-dkms.patch
+Patch22:	python3.3-magic-fix.patch
 
 Requires:	python-rpm python-magic desktop-file-utils
 Suggests:	python-enchant rpmlint-%{_target_vendor}-policy
@@ -68,6 +69,7 @@ Binary and source packages can be checked.
 %patch19 -p1 -b .utf8changelog~
 # %patch20 -p0 -b .subpackage_desc_line~
 %patch21 -p1 -b .dkms~
+%patch22 -p1 -b .magic
 
 %build
 export COMPILE_PYC=1

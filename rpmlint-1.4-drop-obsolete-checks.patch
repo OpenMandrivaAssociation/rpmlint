@@ -1,0 +1,197 @@
+diff -Naur rpmlint.orig/FilesCheck.py rpmlint/FilesCheck.py
+--- rpmlint.orig/FilesCheck.py	2013-09-23 12:14:28.000000000 +0400
++++ rpmlint/FilesCheck.py	2013-09-23 12:13:22.000000000 +0400
+@@ -186,8 +186,6 @@
+ sofile_regex = re.compile('/lib(64)?/(.+/)?lib[^/]+\.so$')
+ devel_regex = re.compile('(.*)-(debug(info)?|devel|headers|source|static)$')
+ debuginfo_package_regex = re.compile('-debug(info)?$')
+-lib_regex = re.compile('lib(64)?/lib[^/]*\.so\..*')
+-ldconfig_regex = re.compile('^[^#]*ldconfig', re.MULTILINE)
+ depmod_regex = re.compile('^[^#]*depmod', re.MULTILINE)
+ install_info_regex = re.compile('^[^#]*install-info', re.MULTILINE)
+ perl_temp_file_regex = re.compile('.*perl.*/(\.packlist|perllocal\.pod)$')
+@@ -557,20 +555,6 @@
+                     if not is_doc:
+                         printError(pkg, 'not-listed-as-documentation', f)
+ 
+-                # check ldconfig call in %post and %postun
+-                if lib_regex.search(f):
+-                    if not postin:
+-                        printError(pkg, 'library-without-ldconfig-postin', f)
+-                    else:
+-                        if not ldconfig_regex.search(postin):
+-                            printError(pkg, 'postin-without-ldconfig', f)
+-
+-                    if not postun:
+-                        printError(pkg, 'library-without-ldconfig-postun', f)
+-                    else:
+-                        if not ldconfig_regex.search(postun):
+-                            printError(pkg, 'postun-without-ldconfig', f)
+-
+                 # check depmod call in %post and %postun
+                 res = not is_kernel_package and kernel_modules_regex.search(f)
+                 if res:
+@@ -1000,21 +984,6 @@
+ Standard groups are:
+ %s.''' % ", ".join(standard_groups),
+ 
+-'library-without-ldconfig-postin',
+-'''This package contains a library and provides no %post scriptlet containing
+-a call to ldconfig.''',
+-
+-'postin-without-ldconfig',
+-'''This package contains a library and its %post scriptlet doesn't call
+-ldconfig.''',
+-
+-'library-without-ldconfig-postun',
+-'''This package contains a library and provides no %postun scriptlet containing
+-a call to ldconfig.''',
+-
+-'postun-without-ldconfig',
+-'''This package contains a library and its %postun doesn't call ldconfig.''',
+-
+ 'info-files-with-install-info-postin',
+ '''While this package contains info files and provides a %post scriptlet
+ containing a call to install-info, this is no longer required due to file
+diff -Naur rpmlint.orig/SpecCheck.py rpmlint/SpecCheck.py
+--- rpmlint.orig/SpecCheck.py	2013-09-23 12:14:28.000000000 +0400
++++ rpmlint/SpecCheck.py	2013-09-23 11:59:59.000000000 +0400
+@@ -36,12 +36,10 @@
+ applied_patch_pipe_regex = re.compile(r'\s%\{PATCH(\d+)\}\s*\|\s*(%\{?__)?patch\b')
+ source_dir_regex = re.compile("^[^#]*(\$RPM_SOURCE_DIR|%{?_sourcedir}?)")
+ obsolete_tags_regex = re.compile("^(Copyright|Serial)\s*:\s*(\S+)")
+-buildroot_regex = re.compile('^BuildRoot\s*:\s*(\S+)', re.IGNORECASE)
+ prefix_regex = re.compile('^Prefix\s*:\s*(\S+)', re.IGNORECASE)
+ packager_regex = re.compile('^Packager\s*:\s*(\S+)', re.IGNORECASE)
+ buildarch_regex = re.compile('^BuildArch(itectures)?\s*:\s*(.+?)\s*$', re.IGNORECASE)
+ make_check_regex = re.compile('(^|\s|%{?__)make}?\s+(check|test)')
+-rm_regex = re.compile('(^|\s)((.*/)?rm|%{?__rm}?) ')
+ rpm_buildroot_regex = re.compile('^[^#]*(?:(\\\*)\${?RPM_BUILD_ROOT}?|(%+){?buildroot}?)')
+ configure_libdir_spec_regex = re.compile('ln |\./configure[^#]*--libdir=(\S+)[^#]*')
+ lib_package_regex = re.compile('^%package.*\Wlib')
+@@ -55,8 +53,6 @@
+ use_utf8 = Config.getOption('UseUTF8', Config.USEUTF8_DEFAULT)
+ libdir_regex = re.compile('%{?_lib(?:dir)?\}?\\b')
+ comment_or_empty_regex = re.compile('^\s*(#|$)')
+-defattr_regex = re.compile('^\s*%defattr\\b')
+-attr_regex = re.compile('^\s*%attr\\b')
+ section_regexs = dict(
+     ([x, re.compile('^%' + x + '(?:\s|$)')]
+      for x in ('build', 'changelog', 'check', 'clean', 'description', 'files',
+@@ -160,7 +156,6 @@
+         applied_patches = []
+         applied_patches_ifarch = []
+         source_dir = False
+-        buildroot = False
+         configure_linenum = None
+         configure_cmdline = ""
+         mklibname = False
+@@ -168,7 +163,6 @@
+         if_depth = 0
+         ifarch_depth = -1
+         current_section = 'package'
+-        buildroot_clean = {'clean': False, 'install' : False}
+         depscript_override = False
+         depgen_disabled = False
+         indent_spaces = 0
+@@ -241,11 +235,6 @@
+                     ('check', 'changelog', 'package', 'description'):
+                 printWarning(pkg, 'make-check-outside-check-section', line[:-1])
+ 
+-            if current_section in buildroot_clean and \
+-                    not buildroot_clean[current_section] and \
+-                    contains_buildroot(line) and rm_regex.search(line):
+-                buildroot_clean[current_section] = True
+-
+             if ifarch_regex.search(line):
+                 if_depth = if_depth + 1
+                 ifarch_depth = if_depth
+@@ -345,13 +334,6 @@
+                 if res:
+                     printWarning(pkg, "obsolete-tag", res.group(1))
+ 
+-                res = buildroot_regex.search(line)
+-                if res:
+-                    buildroot = True
+-                    if res.group(1).startswith('/'):
+-                        printWarning(pkg, 'hardcoded-path-in-buildroot-tag',
+-                                     res.group(1))
+-
+                 res = buildarch_regex.search(line)
+                 if res:
+                     if res.group(2) != "noarch":
+@@ -428,15 +410,6 @@
+                         depgen_disable_regex.search(line) is not None
+ 
+             if current_section == 'files':
+-
+-                if not comment_or_empty_regex.search(line) and not \
+-                   (ifarch_regex.search(line) or if_regex.search(line) or
+-                    endif_regex.search(line)):
+-                    if defattr_regex.search(line):
+-                        files_has_defattr = True
+-                    elif not (files_has_defattr or attr_regex.search(line)):
+-                        printWarning(pkg, 'files-attr-not-set')
+-
+                 # TODO: check scriptlets for these too?
+                 if package_noarch.get(current_package) or \
+                         (current_package not in package_noarch and
+@@ -481,12 +454,6 @@
+         # Last line read is not useful after this point
+         pkg.current_linenum = None
+ 
+-        for sect in (x for x in buildroot_clean if not buildroot_clean[x]):
+-            printWarning(pkg, 'no-cleaning-of-buildroot', '%' + sect)
+-
+-        if not buildroot:
+-            printWarning(pkg, 'no-buildroot-tag')
+-
+         for sec in ('prep', 'build', 'install', 'clean'):
+             if not section.get(sec):
+                 printWarning(pkg, 'no-%%%s-section' % sec)
+@@ -638,17 +605,6 @@
+ '''Direct use of grep as egrep or fgrep is deprecated in GNU grep and
+ historical in POSIX, use grep -E and grep -F instead.''',
+ 
+-'no-buildroot-tag',
+-'''The BuildRoot tag isn't used in your spec. It must be used in order to
+-allow building the package as non root on some systems. For some rpm versions
+-(e.g. rpm.org >= 4.6) the BuildRoot tag is not necessary in specfiles and is
+-ignored by rpmbuild; if your package is only going to be built with such rpm
+-versions you can ignore this warning.''',
+-
+-'hardcoded-path-in-buildroot-tag',
+-'''A path is hardcoded in your Buildroot tag. It should be replaced
+-by something like %{_tmppath}/%name-root.''',
+-
+ 'hardcoded-packager-tag',
+ '''The Packager tag is hardcoded in your spec file. It should be removed, so
+ as to use rebuilder's own defaults.''',
+@@ -731,13 +687,6 @@
+ '''Use the -q option to the %setup macro to avoid useless build output from
+ unpacking the sources.''',
+ 
+-'no-cleaning-of-buildroot',
+-'''You should clean $RPM_BUILD_ROOT in the %clean section and in the beginning
+-of the %install section. Use "rm -rf $RPM_BUILD_ROOT". Some rpm configurations
+-do this automatically; if your package is only going to be built in such
+-configurations, you can ignore this warning for the section(s) where your rpm
+-takes care of it.''',
+-
+ 'rpm-buildroot-usage',
+ '''$RPM_BUILD_ROOT should not be touched during %build or %prep stage, as it
+ may break short circuit builds.''',
+@@ -794,13 +743,6 @@
+ in some editors but can lead to obscure errors. It should be replaced by a
+ regular space.''',
+ 
+-'files-attr-not-set',
+-'''A file or a directory entry in a %files section does not have attributes
+-set which may result in unexpected file permissions and thus security issues
+-in the resulting binary package depending on the build environment and rpmbuild
+-version (typically < 4.4).  Add default attributes using %defattr before it in
+-the %files section, or use per entry %attr's.''',
+-
+ 'non-standard-group',
+ '''The value of the Group tag in the package is not valid.  Valid groups are:
+ "%s".''' % '", "'.join(VALID_GROUPS),

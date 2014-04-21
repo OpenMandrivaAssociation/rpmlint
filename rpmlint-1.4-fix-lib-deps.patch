@@ -1,0 +1,11 @@
+--- rpmlint-1.4/TagsCheck.py.orig	2011-11-28 00:35:51.000000000 +0400
++++ rpmlint-1.4/TagsCheck.py	2013-11-06 11:38:12.327550474 +0400
+@@ -633,7 +633,7 @@
+                     base_or_libs = base + '/' + base + '-libs/lib' + base
+                     # try to match *%_isa as well (e.g. "(x86-64)", "(x86-32)")
+                     base_or_libs_re = re.compile(
+-                        '^(lib)?%s(-libs)?(\(\w+-\d+\))?$' % re.escape(base))
++                        '^(lib)?%s(-libs)?(\(\w+-\d+\))$' % re.escape(base))
+                     for d in deps:
+                         if base_or_libs_re.match(d[0]):
+                             dep = d

@@ -34,6 +34,11 @@ Patch19:	rpmlint-non-utf8-in-changelog-warning.patch
 Patch20:        rpmlint-1.4-spec-subpackage-desc.patch
 Patch21:	rpmlint-1.4-dkms.patch
 Patch22:	python3.3-magic-fix.patch
+Patch23:	rpmlint-1.4-content-licenses.patch
+Patch24:	rpmlint-1.4-drop-obsolete-checks.patch
+Patch25:	rpmlint-1.4-fix-lib-deps.patch
+Patch26:	rpmlint-1.4-improve-rpath-checks.patch
+
 
 Requires:	python-rpm python-magic desktop-file-utils
 Suggests:	python-enchant rpmlint-%{_target_vendor}-policy
@@ -70,6 +75,11 @@ Binary and source packages can be checked.
 # %patch20 -p0 -b .subpackage_desc_line~
 %patch21 -p1 -b .dkms~
 %patch22 -p1 -b .magic
+
+%patch23 -p1 -b .licenses
+# %patch24 -p1 -b .obsolete_checks
+%patch25 -p1 -b .lib_deps
+%patch26 -p1 -b .rpath
 
 %build
 export COMPILE_PYC=1

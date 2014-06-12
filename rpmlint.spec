@@ -1,13 +1,13 @@
 Name:		rpmlint
-Version:	1.4
-Release:	38
+Version:	1.5
+Release:	1
 
 Summary:	RPM correctness checker
 License:	GPLv2+
 Group:		Development/Other
 
 URL:		http://rpmlint.zarb.org/
-Source0:	http://rpmlint.zarb.org/download/%{name}-%{version}.tar.xz
+Source0:	https://downloads.sourceforge.net/project/rpmlint/rpmlint-1.5.tar.xz
 Source1:	rpmlint.config
 
 Patch0:		rpmlint-1.4-fix-paths-to-extracted-srpm-files.patch
@@ -24,7 +24,6 @@ Patch9:		rpmlint-1.4-double-slash-in-path.patch
 Patch10:	rpmlint-1.4-make-tests-pass.patch
 Patch11:	rpmlint-1.4-dont-check-use-of-RPM_SOURCE_DIR-in-changelog.patch
 Patch12:	rpmlint-1.4-dont-use-_RPMVSF_NOSIGNATURES.patch
-Patch13:	rpmlint-1.4-encoding.patch
 Patch14:	rpmlint-1.4-incoherent-pkgname-description.patch
 Patch15:	rpmlint-1.4-only-report-non-versioned-files-for-libs.patch
 Patch16:	rpmlint-1.4-dont-barf-on-missing-locales.patch
@@ -33,16 +32,18 @@ Patch18:	rpmlint-1.4-apply-patches-macro-disables-patch-not-applied-check.patch
 Patch19:	rpmlint-non-utf8-in-changelog-warning.patch
 Patch20:        rpmlint-1.4-spec-subpackage-desc.patch
 Patch21:	rpmlint-1.4-dkms.patch
-Patch22:	python3.3-magic-fix.patch
 Patch23:	rpmlint-1.4-content-licenses.patch
 Patch24:	rpmlint-1.4-drop-obsolete-checks.patch
 Patch25:	rpmlint-1.4-fix-lib-deps.patch
 Patch26:	rpmlint-1.4-improve-rpath-checks.patch
+Patch27:	rpmlint-1.5-python-switch.patch
+Patch28:	rpmlint-1.5-run-in-python2.patch
 
-
+Requires:	python < 3.0
 Requires:	python-rpm python-magic desktop-file-utils
 Suggests:	python-enchant rpmlint-%{_target_vendor}-policy
 
+BuildRequires:	python < 3.0
 BuildRequires:	python-rpm
 BuildArch:	noarch
 
@@ -65,7 +66,6 @@ Binary and source packages can be checked.
 %patch10 -p1 -b .test~
 %patch11 -p1 -b .sourcedir_changelog~
 %patch12 -p1 -b .nosig~
-%patch13 -p1
 %patch14 -p1
 %patch15 -p0
 %patch16 -p1 -b .locales~
@@ -74,22 +74,24 @@ Binary and source packages can be checked.
 %patch19 -p1 -b .utf8changelog~
 # %patch20 -p0 -b .subpackage_desc_line~
 %patch21 -p1 -b .dkms~
-%patch22 -p1 -b .magic
 
 %patch23 -p1 -b .licenses
 # %patch24 -p1 -b .obsolete_checks
 %patch25 -p1 -b .lib_deps
 %patch26 -p1 -b .rpath
 
+%patch27 -p1 -b .pySwitch~
+%patch28 -p1 -b .python2~
+
 %build
 export COMPILE_PYC=1
-%make
+%make PYTHON=python2
 
 %check
-make check
+make check PYTHON=python2
 
 %install
-%makeinstall_std
+%makeinstall_std PYTHON=python2
 
 install -m644 %{SOURCE1} -D %{buildroot}%{_datadir}/%{name}/config
 install -d %{buildroot}%{_datadir}/%{name}/config.d/

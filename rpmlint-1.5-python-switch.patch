@@ -1,0 +1,22 @@
+--- rpmlint-1.5/test.sh.omv~	2014-06-12 22:03:31.227559974 +0200
++++ rpmlint-1.5/test.sh	2014-06-12 22:03:48.376345585 +0200
+@@ -2,9 +2,10 @@
+ 
+ export PYTHONPATH=$(pwd)/tools:$(pwd)
+ export TESTPATH="$(pwd)/test/"
++[ -z "$PYTHON" ] && PYTHON=python2
+ 
+ for i in $TESTPATH/test.*.py; do
+-    python $i
++    $PYTHON $i
+     RET=$?
+     if [ $RET -ne 0 ]; then
+         exit $RET
+@@ -12,6 +13,6 @@ for i in $TESTPATH/test.*.py; do
+ done
+ 
+ echo "Check that rpmlint executes with no unexpected errors"
+-python ./rpmlint -f test.config -T -C $(pwd) test/*.rpm test/*.spec >/dev/null
++$PYTHON ./rpmlint -f test.config -T -C $(pwd) test/*.rpm test/*.spec >/dev/null
+ rc=$?
+ test $rc -eq 0 -o $rc -eq 64

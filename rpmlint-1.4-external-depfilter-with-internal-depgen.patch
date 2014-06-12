@@ -1,14 +1,14 @@
---- rpmlint-1.4/SpecCheck.py.dep_filter~	2012-03-01 23:15:50.817609079 +0100
-+++ rpmlint-1.4/SpecCheck.py	2012-03-01 23:16:14.912621089 +0100
-@@ -76,6 +76,7 @@ scriptlet_requires_regex = re.compile('^
- 
- depscript_override_regex = re.compile('(^|\s)%(define|global)\s+__find_(requires|provides)\s')
- depgen_disable_regex = re.compile('(^|\s)%(define|global)\s+_use_internal_dependency_generator\s+0')
+--- rpmlint-1.5/SpecCheck.py.dep_filter~	2014-06-12 21:51:23.461658300 +0200
++++ rpmlint-1.5/SpecCheck.py	2014-06-12 21:53:11.936302180 +0200
+@@ -84,6 +84,7 @@ scriptlet_requires_regex = re.compile('^
+ DEFINE_RE='(^|\s)%(define|global)\s+'
+ depscript_override_regex = re.compile(DEFINE_RE + '__find_(requires|provides)\s')
+ depgen_disable_regex = re.compile(DEFINE_RE + '_use_internal_dependency_generator\s+0')
 +external_depfilters = ('_exclude_files_from_autoprov','_exclude_files_from_autoreq','_provides_exceptions','_requires_exceptions')
+ patch_fuzz_override_regexp = re.compile(DEFINE_RE + '_default_patch_fuzz\s+(\d+)')
  
  # See https://bugzilla.redhat.com/488146 for details
- indent_spaces_regex = re.compile('( \t|(^|\t)([^\t]{8})*[^\t]{4}[^\t]?([^\t][^\t.!?]|[^\t]?[.!?] )  )')
-@@ -589,6 +590,16 @@ class SpecCheck(AbstractCheck.AbstractCh
+@@ -605,6 +606,16 @@ class SpecCheck(AbstractCheck.AbstractCh
                                                    url, cmd5))
                      elif srctype == "Source" and tarball_regex.search(url):
                          printWarning(pkg, 'invalid-url', '%s:' % tag, url)
@@ -25,7 +25,7 @@
  
  # Create an object to enable the auto registration of the test
  check = SpecCheck()
-@@ -745,6 +756,10 @@ __find_requires has no effect if rpm's i
+@@ -761,6 +772,10 @@ __find_requires has no effect if rpm's i
  been disabled for the build.  %define _use_internal_dependency_generator to 0
  to disable it in the specfile, or don't define __find_provides/requires.''',
  

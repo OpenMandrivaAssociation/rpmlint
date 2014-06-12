@@ -1,5 +1,5 @@
---- rpmlint-1.4/config.info~	2012-03-22 01:41:42.732996682 +0100
-+++ rpmlint-1.4/config	2012-03-22 01:49:04.653633286 +0100
+--- rpmlint-1.5/config.info~	2012-06-05 21:37:21.000000000 +0200
++++ rpmlint-1.5/config	2014-06-12 21:53:37.104987529 +0200
 @@ -206,7 +206,13 @@ from Config import *
  # Man page warning category, passed to groff -w while checking man pages.
  # See the groff(1) or troff(1) man pages for available categories.
@@ -15,17 +15,17 @@
  
  # Output filters.
  # ---------------
---- rpmlint-1.4/FilesCheck.py.info~	2012-03-22 01:39:50.834835653 +0100
-+++ rpmlint-1.4/FilesCheck.py	2012-03-22 02:05:12.086030124 +0100
+--- rpmlint-1.5/FilesCheck.py.info~	2013-05-09 16:50:45.000000000 +0200
++++ rpmlint-1.5/FilesCheck.py	2014-06-12 21:54:06.240623283 +0200
 @@ -220,6 +220,7 @@ skipdocs_regex = re.compile(Config.getOp
  meta_package_regex = re.compile(Config.getOption('MetaPackageRegexp', '^(bundle|task)-'))
  filesys_packages = ['filesystem'] # TODO: make configurable?
  quotes_regex = re.compile('[\'"]+')
 +install_info_triggers = Config.getOption('InstallInfoTriggers', False)
+ start_certificate_regex = re.compile('^-----BEGIN CERTIFICATE-----$')
+ start_private_key_regexp = re.compile('^----BEGIN PRIVATE KEY-----$')
  
- for idx in range(0, len(dangling_exceptions)):
-     dangling_exceptions[idx][0] = re.compile(dangling_exceptions[idx][0])
-@@ -592,21 +593,32 @@ class FilesCheck(AbstractCheck.AbstractC
+@@ -598,21 +599,32 @@ class FilesCheck(AbstractCheck.AbstractC
  
                  # check install-info call in %post and %postun
                  if f.startswith('/usr/share/info/'):
@@ -70,7 +70,7 @@
  
                  # check perl temp file
                  if perl_temp_file_regex.search(f):
-@@ -988,6 +1000,11 @@ a call to ldconfig.''',
+@@ -1005,6 +1017,11 @@ a call to ldconfig.''',
  'postun-without-ldconfig',
  '''This package contains a library and its %postun doesn't call ldconfig.''',
  
@@ -82,7 +82,7 @@
  'info-files-without-install-info-postin',
  '''This package contains info files and provides no %post scriptlet containing
  a call to install-info.''',
-@@ -995,6 +1012,11 @@ a call to install-info.''',
+@@ -1012,6 +1029,11 @@ a call to install-info.''',
  'postin-without-install-info',
  '''This package contains info files and its %post doesn't call install-info.''',
  
@@ -94,9 +94,9 @@
  'info-files-without-install-info-postun',
  '''This package contains info files and provides no %postun scriptlet containing
  a call to install-info.''',
---- rpmlint-1.4/TagsCheck.py.info~	2012-03-22 01:39:14.642783586 +0100
-+++ rpmlint-1.4/TagsCheck.py	2012-03-22 02:08:45.599338930 +0100
-@@ -26,6 +26,8 @@ import FilesCheck
+--- rpmlint-1.5/TagsCheck.py.info~	2014-06-12 21:53:37.099987591 +0200
++++ rpmlint-1.5/TagsCheck.py	2014-06-12 21:54:58.496969989 +0200
+@@ -25,6 +25,8 @@ import FilesCheck
  import Pkg
  
  _use_enchant = Config.getOption("UseEnchant", None)
@@ -105,8 +105,8 @@
  if _use_enchant or _use_enchant is None:
      try:
          import enchant
-@@ -617,6 +619,9 @@ class TagsCheck(AbstractCheck.AbstractCh
-                     printError(pkg, 'explicit-lib-dependency', d[0])
+@@ -618,6 +620,9 @@ class TagsCheck(AbstractCheck.AbstractCh
+ 
              if d[1] == rpm.RPMSENSE_EQUAL and d[2][2] is not None:
                  printWarning(pkg, 'requires-on-release', value)
 +            if _install_info_triggers:
@@ -115,7 +115,7 @@
              self._unexpanded_macros(pkg, 'dependency %s' % (value,), value)
  
          self._unexpanded_macros(pkg, 'Name', name)
-@@ -1094,6 +1099,10 @@ once.''',
+@@ -1095,6 +1100,10 @@ once.''',
  'tag-not-utf8',
  '''The character encoding of the value of this tag is not UTF-8.''',
  

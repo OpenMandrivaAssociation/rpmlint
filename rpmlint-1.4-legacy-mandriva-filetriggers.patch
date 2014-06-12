@@ -1,14 +1,14 @@
---- rpmlint-1.4/FilesCheck.py.triggers~	2012-03-22 02:32:50.471503834 +0100
-+++ rpmlint-1.4/FilesCheck.py	2012-03-22 02:41:22.591274461 +0100
+--- rpmlint-1.5/FilesCheck.py.triggers~	2014-06-12 21:55:14.812766013 +0200
++++ rpmlint-1.5/FilesCheck.py	2014-06-12 21:56:08.753091666 +0200
 @@ -221,6 +221,7 @@ meta_package_regex = re.compile(Config.g
  filesys_packages = ['filesystem'] # TODO: make configurable?
  quotes_regex = re.compile('[\'"]+')
  install_info_triggers = Config.getOption('InstallInfoTriggers', False)
 +legacy_mandriva_filetriggers = re.compile('^/var/lib/rpm/filetriggers/.*\.(filter|script)$')
+ start_certificate_regex = re.compile('^-----BEGIN CERTIFICATE-----$')
+ start_private_key_regexp = re.compile('^----BEGIN PRIVATE KEY-----$')
  
- for idx in range(0, len(dangling_exceptions)):
-     dangling_exceptions[idx][0] = re.compile(dangling_exceptions[idx][0])
-@@ -948,6 +949,9 @@ class FilesCheck(AbstractCheck.AbstractC
+@@ -965,6 +966,9 @@ class FilesCheck(AbstractCheck.AbstractC
                  if stat.S_IWGRP & mode or stat.S_IWOTH & mode:
                      printError(pkg, 'non-owner-writeable-only-crontab-file', f)
  
@@ -18,14 +18,14 @@
          if log_file and not logrotate_file:
              printWarning(pkg, 'log-files-without-logrotate', log_file)
  
-@@ -1352,6 +1356,10 @@ as intended.''',
- '''The Free Software Foundation address in this file seems to be outdated or
+@@ -1370,6 +1374,10 @@ as intended.''',
  misspelled.  Ask upstream to update the address, or if this is a license file,
  possibly the entire file with a new copy available from the FSF.''',
-+
+ 
 +'legacy-mandriva-filetriggers',
 +'''This package provides legacy Mandriva file triggers. These triggers should
-+now be replaced by native rpm file triggers.'''
- )
- 
- # FilesCheck.py ends here
++now be replaced by native rpm file triggers.''',
++
+ 'gzipped-svg-icon',
+ '''Not all desktop environments that support SVG icons support them gzipped
+ (.svgz).  Install the icon as plain uncompressed SVG.''',

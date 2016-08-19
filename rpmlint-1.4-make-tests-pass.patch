@@ -1,18 +1,19 @@
---- rpmlint-1.4/test.config.test~	2012-03-23 09:21:21.052520659 +0100
-+++ rpmlint-1.4/test.config	2012-03-23 09:21:03.298496145 +0100
+--- rpmlint-1.7/test.config.test~	2016-08-19 12:06:35.673373476 +0200
++++ rpmlint-1.7/test.config	2016-08-19 12:06:35.673373476 +0200
 @@ -0,0 +1,5 @@
 +from Config import *
 +from os import environ
 +
 +addFilter('non-standard-group')
 +
---- rpmlint-1.4/test.sh.test~	2012-03-23 09:15:57.807074688 +0100
-+++ rpmlint-1.4/test.sh	2012-03-23 09:17:53.771234597 +0100
-@@ -12,6 +12,6 @@ for i in $TESTPATH/test.*.py; do
+--- rpmlint-1.7/test.sh.test~	2016-08-19 12:06:35.673373476 +0200
++++ rpmlint-1.7/test.sh	2016-08-19 12:08:20.289890287 +0200
+@@ -18,7 +18,7 @@ for i in $TESTPATH/test.*.py; do
  done
  
  echo "Check that rpmlint executes with no unexpected errors"
--python ./rpmlint -C $(pwd) test/*.rpm test/*.spec >/dev/null
-+python ./rpmlint -f test.config -T -C $(pwd) test/*.rpm test/*.spec >/dev/null
+-$PYTHON ./rpmlint -C $(pwd) test/*/*.rpm test/spec/*.spec >/dev/null
++$PYTHON ./rpmlint -f test.config -T -C $(pwd) test/*/*.rpm test/spec/*.spec >/dev/null
  rc=$?
  test $rc -eq 0 -o $rc -eq 64
+ 

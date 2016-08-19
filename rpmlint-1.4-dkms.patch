@@ -1,11 +1,11 @@
---- rpmlint-1.4/FilesCheck.py.dkms~	2014-01-07 21:28:05.362576975 +0100
-+++ rpmlint-1.4/FilesCheck.py	2014-01-07 21:28:12.245910399 +0100
-@@ -184,7 +184,7 @@ buildconfigfile_regex = re.compile('(\.p
+--- rpmlint-1.7/FilesCheck.py.dkms~	2016-08-19 12:13:49.450344110 +0200
++++ rpmlint-1.7/FilesCheck.py	2016-08-19 12:14:56.966023468 +0200
+@@ -192,7 +192,7 @@ buildconfigfile_regex = re.compile('(\.p
  # room for improvement with catching more -R, but also for false positives...
  buildconfig_rpath_regex = re.compile('(?:-rpath|Wl,-R)\\b')
  sofile_regex = re.compile('/lib(64)?/(.+/)?lib[^/]+\.so$')
 -devel_regex = re.compile('(.*)-(debug(info)?|devel|headers|source|static)$')
-+devel_regex = re.compile('(^dkms-.*|(.*)-(debug(info)?|devel|headers|source|static))$')
++devel_regex = re.compile('(^dkms-.*|(.*)-(debug(info)?|devel|headers|source|static|examples))$')
  debuginfo_package_regex = re.compile('-debug(info)?$')
- lib_regex = re.compile('lib(64)?/lib[^/]*\.so\..*')
+ lib_regex = re.compile('lib(64)?/lib[^/]*(\.so\..*|-[0-9.]+\.so)')
  ldconfig_regex = re.compile('^[^#]*ldconfig', re.MULTILINE)

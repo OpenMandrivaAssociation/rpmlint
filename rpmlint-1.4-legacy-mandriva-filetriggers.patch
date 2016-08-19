@@ -1,24 +1,24 @@
---- rpmlint-1.5/FilesCheck.py.triggers~	2014-06-12 21:55:14.812766013 +0200
-+++ rpmlint-1.5/FilesCheck.py	2014-06-12 21:56:08.753091666 +0200
-@@ -221,6 +221,7 @@ meta_package_regex = re.compile(Config.g
- filesys_packages = ['filesystem'] # TODO: make configurable?
+--- rpmlint-1.7/FilesCheck.py.triggers~	2016-08-19 12:00:26.119026451 +0200
++++ rpmlint-1.7/FilesCheck.py	2016-08-19 12:02:34.132465664 +0200
+@@ -229,6 +229,7 @@ meta_package_regex = re.compile(Config.g
+ filesys_packages = ['filesystem']  # TODO: make configurable?
  quotes_regex = re.compile('[\'"]+')
  install_info_triggers = Config.getOption('InstallInfoTriggers', False)
 +legacy_mandriva_filetriggers = re.compile('^/var/lib/rpm/filetriggers/.*\.(filter|script)$')
  start_certificate_regex = re.compile('^-----BEGIN CERTIFICATE-----$')
- start_private_key_regexp = re.compile('^----BEGIN PRIVATE KEY-----$')
+ start_private_key_regex = re.compile('^----BEGIN PRIVATE KEY-----$')
  
-@@ -965,6 +966,9 @@ class FilesCheck(AbstractCheck.AbstractC
+@@ -990,6 +991,9 @@ class FilesCheck(AbstractCheck.AbstractC
                  if stat.S_IWGRP & mode or stat.S_IWOTH & mode:
                      printError(pkg, 'non-owner-writeable-only-crontab-file', f)
  
 +            if legacy_mandriva_filetriggers.search(f):
 +                printWarning(pkg, 'legacy-mandriva-filetriggers', f)
 +
-         if log_file and not logrotate_file:
-             printWarning(pkg, 'log-files-without-logrotate', log_file)
+         if len(log_files) and not logrotate_file:
+             printWarning(pkg, 'log-files-without-logrotate', sorted(log_files))
  
-@@ -1370,6 +1374,10 @@ as intended.''',
+@@ -1366,6 +1370,10 @@ as intended.''',
  misspelled.  Ask upstream to update the address, or if this is a license file,
  possibly the entire file with a new copy available from the FSF.''',
  

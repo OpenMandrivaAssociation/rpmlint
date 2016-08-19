@@ -1,14 +1,14 @@
---- rpmlint-1.5/FilesCheck.py.slash~	2014-06-12 21:56:38.106724695 +0200
-+++ rpmlint-1.5/FilesCheck.py	2014-06-12 21:57:55.352758987 +0200
-@@ -222,6 +222,7 @@ filesys_packages = ['filesystem'] # TODO
+--- rpmlint-1.7/FilesCheck.py.slash~	2016-08-19 12:02:48.202403151 +0200
++++ rpmlint-1.7/FilesCheck.py	2016-08-19 12:06:21.897436713 +0200
+@@ -230,6 +230,7 @@ filesys_packages = ['filesystem']  # TOD
  quotes_regex = re.compile('[\'"]+')
  install_info_triggers = Config.getOption('InstallInfoTriggers', False)
  legacy_mandriva_filetriggers = re.compile('^/var/lib/rpm/filetriggers/.*\.(filter|script)$')
 +pkgconfig_regex = re.compile('^/usr/lib(64|x32)?/pkgconfig/.*\.pc$')
  start_certificate_regex = re.compile('^-----BEGIN CERTIFICATE-----$')
- start_private_key_regexp = re.compile('^----BEGIN PRIVATE KEY-----$')
+ start_private_key_regex = re.compile('^----BEGIN PRIVATE KEY-----$')
  
-@@ -969,6 +970,16 @@ class FilesCheck(AbstractCheck.AbstractC
+@@ -994,6 +995,16 @@ class FilesCheck(AbstractCheck.AbstractC
              if legacy_mandriva_filetriggers.search(f):
                  printWarning(pkg, 'legacy-mandriva-filetriggers', f)
  
@@ -22,10 +22,10 @@
 +                            if line.find('//') >= 0 and not line.find('://') >= 0:
 +                                printError(pkg, 'double-slash-in-path', f, line)
 +
-         if log_file and not logrotate_file:
-             printWarning(pkg, 'log-files-without-logrotate', log_file)
+         if len(log_files) and not logrotate_file:
+             printWarning(pkg, 'log-files-without-logrotate', sorted(log_files))
  
-@@ -1378,6 +1389,12 @@ possibly the entire file with a new copy
+@@ -1374,6 +1385,12 @@ possibly the entire file with a new copy
  '''This package provides legacy Mandriva file triggers. These triggers should
  now be replaced by native rpm file triggers.''',
  

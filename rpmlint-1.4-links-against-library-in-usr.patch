@@ -1,6 +1,6 @@
---- rpmlint-1.5/BinariesCheck.py.usrlib_ldd~	2014-06-12 21:59:23.107661900 +0200
-+++ rpmlint-1.5/BinariesCheck.py	2014-06-12 22:00:12.289047048 +0200
-@@ -223,6 +223,14 @@ class BinaryInfo:
+--- rpmlint-1.7/BinariesCheck.py.usrlib_ldd~	2016-08-19 12:08:34.459824471 +0200
++++ rpmlint-1.7/BinariesCheck.py	2016-08-19 12:09:24.182592898 +0200
+@@ -232,6 +232,14 @@ class BinaryInfo:
                          else:
                              in_unused = False
  
@@ -15,7 +15,7 @@
  path_regex = re.compile('(.*/)([^/]+)')
  numeric_dir_regex = re.compile('/usr(?:/share)/man/man./(.*)\.[0-9](?:\.gz|\.bz2)')
  versioned_dir_regex = re.compile('[^.][0-9]')
-@@ -633,6 +641,11 @@ http://bugs.debian.org/cgi-bin/bugreport
+@@ -646,6 +654,11 @@ http://bugs.debian.org/cgi-bin/bugreport
  '''This executable must be position independent.  Check that it is built with
  -fPIE/-fpie in compiler flags and -pie in linker flags.''',
  
@@ -25,5 +25,5 @@
 +not necessarily mounted at same time, ie. such as during boot.''',
 +
  'missing-call-to-setgroups-before-setuid',
- '''This executable is calling setuid and setgid without setgroups or initgroups.
- There is a high probability this mean it didn't relinquish all groups, and this
+ '''This executable is calling setuid and setgid without setgroups or
+ initgroups. There is a high probability this means it didn't relinquish all

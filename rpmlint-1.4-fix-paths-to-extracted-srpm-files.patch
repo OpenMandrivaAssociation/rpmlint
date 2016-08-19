@@ -1,6 +1,6 @@
---- rpmlint-1.4/SpecCheck.py.srpm_paths~	2011-11-23 21:21:05.000000000 +0100
-+++ rpmlint-1.4/SpecCheck.py	2011-12-21 00:55:46.153718537 +0100
-@@ -140,7 +140,15 @@ class SpecCheck(AbstractCheck.AbstractCh
+--- rpmlint-1.7/SpecCheck.py.srpm_paths~	2016-08-19 10:12:46.511436899 +0200
++++ rpmlint-1.7/SpecCheck.py	2016-08-19 10:15:01.077797790 +0200
+@@ -154,7 +154,15 @@ class SpecCheck(AbstractCheck.AbstractCh
                  printError(pkg, "invalid-spec-name")
  
              # check content of spec file
@@ -14,5 +14,5 @@
 +                for key in oldvals.keys():
 +                    rpm.addMacro(key, oldvals[key])
  
-     def check_spec(self, pkg, spec_file, spec_lines=[]):
+     def check_spec(self, pkg, spec_file):
          self._spec_file = spec_file

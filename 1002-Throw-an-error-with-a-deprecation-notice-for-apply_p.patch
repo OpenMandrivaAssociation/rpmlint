@@ -1,0 +1,54 @@
+From 07521dac4fefe65b9e76cf80227a6c0a8381763f Mon Sep 17 00:00:00 2001
+From: Neal Gompa <ngompa@mageia.org>
+Date: Tue, 5 Sep 2017 09:34:34 -0400
+Subject: [PATCH 1002/1002] Throw an error with a deprecation notice for
+ %apply_patches
+
+While it will not warn about unapplied patches when used (c.f.
+mga#8170), it will throw an error about the usage of %apply_patches
+and recommend the usage of %autopatch instead.
+---
+ SpecCheck.py | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
+
+diff --git a/SpecCheck.py b/SpecCheck.py
+index 8cb85b3..7387e21 100644
+--- a/SpecCheck.py
++++ b/SpecCheck.py
+@@ -101,6 +101,7 @@ setup_ab_regex = re.compile(r' -[A-Za-z]*[ab]')
+ autosetup_regex = re.compile(r'^\s*%autosetup(\s.*|$)')
+ autosetup_n_regex = re.compile(r' -[A-Za-z]*N')
+ autopatch_regex = re.compile(r'^\s*%autopatch(?:\s|$)')
++apply_patches_regex = re.compile("^%apply_patches")
+ 
+ filelist_regex = re.compile(r'\s+-f\s+\S+')
+ pkgname_regex = re.compile(r'\s+(?:-n\s+)?(\S+)')
+@@ -270,6 +271,11 @@ class SpecCheck(AbstractCheck.AbstractCheck):
+                 patches_auto_applied = True
+                 if current_section != 'prep':
+                     printWarning(pkg, '%autopatch-not-in-prep')
++            elif apply_patches_regex.search(line):
++                patches_auto_applied = True
++                printError(pkg, 'deprecated-%apply_patches')
++                if current_section != 'prep':
++                    printWarning(pkg, '%apply_patches-not-in-prep')
+             else:
+                 res = autosetup_regex.search(line)
+                 if res:
+@@ -839,7 +845,12 @@ intended contents.''',
+ could lead to applying a patch at the wrong location. Usually, this is often
+ the sign that someone didn't check if a patch is still needed and do not want
+ to rediff it. It is usually better to rediff the patch and try to send it
+-upstream.'''
++upstream.''',
++
++'deprecated-%apply_patches',
++'''The %apply_patches macro is deprecated and slated for removal in Mageia 7.
++The recommended replacement is '%autopatch -p1'.'''
++
+ )
+ 
+ # SpecCheck.py ends here
+-- 
+2.13.2
+

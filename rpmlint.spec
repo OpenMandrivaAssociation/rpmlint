@@ -1,3 +1,10 @@
+# (ngompa) disable rpmlint to avoid terrible cyclic dependency problem in rpm5->rpm4 + python2->python3 transition
+# remove after rpm5->rpm4 transition is complete
+%undefine _build_pkgcheck_set
+%undefine _build_pkgcheck_srpm
+%undefine _nonzero_exit_pkgcheck_terminate_build
+###
+
 Summary:	RPM correctness checker
 Name:		rpmlint
 Version:	1.10

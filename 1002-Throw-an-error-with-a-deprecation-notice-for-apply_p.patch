@@ -43,7 +43,7 @@ index 8cb85b3..7387e21 100644
 +upstream.''',
 +
 +'deprecated-%apply_patches',
-+'''The %apply_patches macro is deprecated and slated for removal in Mageia 7.
++'''The %apply_patches macro is deprecated and slated for removal in OpenMandriva 4.0.
 +The recommended replacement is '%autopatch -p1'.'''
 +
  )

@@ -53,8 +53,15 @@ install -pm 644 %{SOURCE1} config
 export COMPILE_PYC=1
 %make
 
+# (tpg) disable it for now
+# [02:35] <King_InuYasha> _TPG: py.test -> pytest
+# [02:36] <King_InuYasha> make check ignorable for now
+# [02:36] <King_InuYasha> I have to fix this later
+# [02:36] <King_InuYasha> apparently pytest changed the binary from py.test to pytest :(
+%if 0
 %check
 make check
+%endif
 
 %install
 %makeinstall_std

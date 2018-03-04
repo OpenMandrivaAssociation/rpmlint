@@ -22,6 +22,7 @@ Patch1002:	1002-Throw-an-error-with-a-deprecation-notice-for-apply_p.patch
 
 BuildRequires:	pkgconfig(python)
 BuildRequires:	python-rpm
+BuildRequires:	bash-completion
 Requires:	python > 3.0
 Requires:	python-rpm
 Requires:	python-magic

@@ -12,7 +12,7 @@ Release:	1
 License:	GPLv2+
 Group:		Development/Other
 URL:		https://github.com/rpm-software-management/rpmlint
-Source0:	https://github.com/rpm-software-management/rpmlint/archive/%{name}-%{version}.tar.xz
+Source0:	https://github.com/rpm-software-management/rpmlint/archive/%{name}-%{version}.tar.gz
 Source1:	rpmlint.config
 # Backports from upstream
 

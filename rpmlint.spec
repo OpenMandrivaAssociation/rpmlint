@@ -1,14 +1,7 @@
-# (ngompa) disable rpmlint to avoid terrible cyclic dependency problem in rpm5->rpm4 + python2->python3 transition
-# remove after rpm5->rpm4 transition is complete
-%undefine _build_pkgcheck_set
-%undefine _build_pkgcheck_srpm
-%undefine _nonzero_exit_pkgcheck_terminate_build
-###
-
 Summary:	RPM correctness checker
 Name:		rpmlint
 Version:	1.10
-Release:	2
+Release:	3
 License:	GPLv2+
 Group:		Development/Other
 URL:		https://github.com/rpm-software-management/rpmlint
@@ -46,15 +39,13 @@ Rpmlint is a tool to check common errors on rpm packages.
 Binary and source packages can be checked.
 
 %prep
-%setup -q
-%apply_patches
+%autosetup -p1
 
 cp -p config config.example
 install -pm 644 %{SOURCE1} config
 
 %build
-export COMPILE_PYC=1
-%make
+%make_build COMPILE_PYC=1 PYTHON=%{__python}
 
 # (tpg) disable it for now
 # [02:35] <King_InuYasha> _TPG: py.test -> pytest
@@ -67,7 +58,7 @@ make check
 %endif
 
 %install
-%makeinstall_std
+%make_install PYTHON=%{__python}
 
 install -d %{buildroot}%{_datadir}/%{name}/config.d/
 

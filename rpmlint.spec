@@ -1,7 +1,7 @@
 Summary:	RPM correctness checker
 Name:		rpmlint
-Version:	1.10
-Release:	4
+Version:	1.11
+Release:	1
 License:	GPLv2+
 Group:		Development/Other
 URL:		https://github.com/rpm-software-management/rpmlint
@@ -12,6 +12,9 @@ Source1:	rpmlint.config
 # Mageia specific patches
 Patch1001:	1001-Add-some-licenses-allowed-in-Fedora-as-they-are-allo.patch
 Patch1002:	1002-Throw-an-error-with-a-deprecation-notice-for-apply_p.patch
+
+# OpenMandriva specific patches
+Patch2000:	rpmlint-1.11-dont-fail-on-missing-locales.patch
 
 BuildRequires:	pkgconfig(python)
 BuildRequires:	python-rpm
@@ -39,7 +42,7 @@ Rpmlint is a tool to check common errors on rpm packages.
 Binary and source packages can be checked.
 
 %prep
-%autosetup -p1
+%autosetup -p1 -n %{name}-%{name}-%{version}
 
 cp -p config config.example
 install -pm 644 %{SOURCE1} config

@@ -1,7 +1,7 @@
 Summary:	RPM correctness checker
 Name:		rpmlint
 Version:	1.11
-Release:	2
+Release:	3
 License:	GPLv2+
 Group:		Development/Other
 URL:		https://github.com/rpm-software-management/rpmlint

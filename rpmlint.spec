@@ -1,13 +1,14 @@
 Summary:	RPM correctness checker
 Name:		rpmlint
 Version:	1.11
-Release:	3
+Release:	4
 License:	GPLv2+
 Group:		Development/Other
 URL:		https://github.com/rpm-software-management/rpmlint
 Source0:	https://github.com/rpm-software-management/rpmlint/archive/%{name}-%{version}.tar.gz
 Source1:	rpmlint.config
 # Backports from upstream
+Patch0001:	rpmlint-1.11-rpm4.15.patch
 
 # Mageia specific patches
 Patch1001:	1001-Add-some-licenses-allowed-in-Fedora-as-they-are-allo.patch

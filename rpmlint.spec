@@ -1,7 +1,7 @@
 Summary:	RPM correctness checker
 Name:		rpmlint
 Version:	1.11
-Release:	4
+Release:	5
 License:	GPLv2+
 Group:		Development/Other
 URL:		https://github.com/rpm-software-management/rpmlint
@@ -13,6 +13,7 @@ Patch0001:	rpmlint-1.11-rpm4.15.patch
 # Mageia specific patches
 Patch1001:	1001-Add-some-licenses-allowed-in-Fedora-as-they-are-allo.patch
 Patch1002:	1002-Throw-an-error-with-a-deprecation-notice-for-apply_p.patch
+Patch1003:	python38.patch
 
 # OpenMandriva specific patches
 Patch2000:	rpmlint-1.11-dont-fail-on-missing-locales.patch

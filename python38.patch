@@ -1,0 +1,13 @@
+diff --git a/PostCheck.py b/PostCheck.py
+index 456ebff..68ac5f0 100644
+--- a/PostCheck.py
++++ b/PostCheck.py
+@@ -74,7 +74,7 @@ def check_syntax_script(prog, commandline, script):
+     tmpfd, tmpname = tempfile.mkstemp(prefix='rpmlint.')
+     tmpfile = os.fdopen(tmpfd, 'wb')
+     try:
+-        tmpfile.write(script)
++        tmpfile.write(script.encode())
+         tmpfile.close()
+         ret = Pkg.getstatusoutput((prog, commandline, tmpname))
+     finally:

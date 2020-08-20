@@ -18,6 +18,7 @@ Patch1003:	python38.patch
 # OpenMandriva specific patches
 Patch2000:	rpmlint-1.11-dont-fail-on-missing-locales.patch
 Patch2001:	rpmlint-rpmlint-1.11-add-Zstandard-support.patch
+
 BuildRequires:	pkgconfig(python)
 BuildRequires:	python-rpm
 BuildRequires:	pkgconfig(bash-completion)

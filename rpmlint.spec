@@ -1,7 +1,7 @@
 Summary:	RPM correctness checker
 Name:		rpmlint
 Version:	1.11
-Release:	5
+Release:	6
 License:	GPLv2+
 Group:		Development/Other
 URL:		https://github.com/rpm-software-management/rpmlint
@@ -17,12 +17,10 @@ Patch1003:	python38.patch
 
 # OpenMandriva specific patches
 Patch2000:	rpmlint-1.11-dont-fail-on-missing-locales.patch
-
+Patch2001:	rpmlint-rpmlint-1.11-add-Zstandard-support.patch
 BuildRequires:	pkgconfig(python)
 BuildRequires:	python-rpm
 BuildRequires:	pkgconfig(bash-completion)
-# (tpg) remove after rpm5 to rpmv4 migration
-BuildRequires:	pkgconf
 Requires:	python > 3.0
 Requires:	python-rpm
 Requires:	python-magic
@@ -34,6 +32,7 @@ Requires:	binutils
 Requires:	gzip
 Requires:	bzip2
 Requires:	xz
+Requires:	zstd
 # Needed for man page check in FilesCheck.py
 Requires:	groff-for-man
 Suggests:	myspell-en

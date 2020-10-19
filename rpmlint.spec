@@ -1,7 +1,7 @@
 Summary:	RPM correctness checker
 Name:		rpmlint
 Version:	1.11
-Release:	8
+Release:	9
 License:	GPLv2+
 Group:		Development/Other
 URL:		https://github.com/rpm-software-management/rpmlint
@@ -27,7 +27,7 @@ Requires:	python-rpm
 Requires:	python-magic
 Requires:	desktop-file-utils
 Suggests:	python-enchant
-Requires:	distro-release-rpmlint--policy
+Requires:	distro-release-rpmlint-policy
 Requires:	cpio
 Requires:	binutils
 Requires:	gzip

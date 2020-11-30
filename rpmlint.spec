@@ -24,7 +24,7 @@ BuildRequires:	python-rpm
 BuildRequires:	pkgconfig(bash-completion)
 Requires:	python > 3.0
 Requires:	python-rpm
-Requires:	python-file-magic
+Requires:	python3dist(file-magic)
 Requires:	desktop-file-utils
 Suggests:	python-enchant
 Requires:	distro-release-rpmlint-policy

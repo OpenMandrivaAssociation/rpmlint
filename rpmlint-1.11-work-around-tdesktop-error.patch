@@ -1,0 +1,107 @@
+diff -up rpmlint-rpmlint-1.11/Pkg.py.omv~ rpmlint-rpmlint-1.11/Pkg.py
+--- rpmlint-rpmlint-1.11/Pkg.py.omv~	2022-01-01 23:17:09.671943846 +0100
++++ rpmlint-rpmlint-1.11/Pkg.py	2022-01-01 23:18:16.873151318 +0100
+@@ -709,52 +709,57 @@ class Pkg(AbstractPkg):
+ 
+         if files:
+             for idx in range(0, len(files)):
+-                pkgfile = PkgFile(files[idx])
+-                pkgfile.path = os.path.normpath(os.path.join(
+-                    self.dirName() or '/', pkgfile.name.lstrip('/')))
+-                pkgfile.flags = flags[idx]
+-                pkgfile.mode = modes[idx]
+-                pkgfile.user = b2s(users[idx])
+-                pkgfile.group = b2s(groups[idx])
+-                pkgfile.linkto = links[idx] and safe_normpath(links[idx])
+-                pkgfile.size = sizes[idx]
+-                pkgfile.md5 = md5s[idx]
+-                pkgfile.mtime = mtimes[idx]
+-                pkgfile.rdev = rdevs[idx]
+-                pkgfile.inode = inodes[idx]
+-                pkgfile.requires = parse_deps(requires[idx])
+-                pkgfile.provides = parse_deps(provides[idx])
+-                pkgfile.lang = b2s(langs[idx])
+-                pkgfile.magic = magics[idx]
+-                if not pkgfile.magic:
+-                    if stat.S_ISDIR(pkgfile.mode):
+-                        pkgfile.magic = 'directory'
+-                    elif stat.S_ISLNK(pkgfile.mode):
+-                        pkgfile.magic = "symbolic link to `%s'" % pkgfile.linkto
+-                    elif not pkgfile.size:
+-                        pkgfile.magic = 'empty'
+-                if (not pkgfile.magic and
+-                        not pkgfile.is_ghost and _magic):
+-                    # file() method evaluates every file twice with python2,
+-                    # use descriptor() method instead
+-                    try:
+-                        fd = os.open(pkgfile.path, os.O_RDONLY)
+-                        pkgfile.magic = b2s(_magic.descriptor(fd))
+-                        os.close(fd)
+-                    except OSError:
+-                        pass
+-                if pkgfile.magic is None:
+-                    pkgfile.magic = ''
+-                elif Pkg._magic_from_compressed_re.search(pkgfile.magic):
+-                    # Discard magic from inside compressed files ("file -z")
+-                    # until PkgFile gets decompression support.  We may get
+-                    # such magic strings from package headers already now;
+-                    # for example Fedora's rpmbuild as of F-11's 4.7.1 is
+-                    # patched so it generates them.
+-                    pkgfile.magic = ''
+-                if filecaps:
+-                    pkgfile.filecaps = filecaps[idx]
+-                self._files[pkgfile.name] = pkgfile
++                try:
++                    pkgfile = PkgFile(files[idx])
++                    pkgfile.path = os.path.normpath(os.path.join(
++                        self.dirName() or '/', pkgfile.name.lstrip('/')))
++                    pkgfile.flags = flags[idx]
++                    pkgfile.mode = modes[idx]
++                    pkgfile.user = b2s(users[idx])
++                    pkgfile.group = b2s(groups[idx])
++                    pkgfile.linkto = links[idx] and safe_normpath(links[idx])
++                    pkgfile.size = sizes[idx]
++                    pkgfile.md5 = md5s[idx]
++                    pkgfile.mtime = mtimes[idx]
++                    pkgfile.rdev = rdevs[idx]
++                    pkgfile.inode = inodes[idx]
++                    pkgfile.requires = parse_deps(requires[idx])
++                    pkgfile.provides = parse_deps(provides[idx])
++                    pkgfile.lang = b2s(langs[idx])
++                    pkgfile.magic = magics[idx]
++                    if not pkgfile.magic:
++                        if stat.S_ISDIR(pkgfile.mode):
++                            pkgfile.magic = 'directory'
++                        elif stat.S_ISLNK(pkgfile.mode):
++                            pkgfile.magic = "symbolic link to `%s'" % pkgfile.linkto
++                        elif not pkgfile.size:
++                            pkgfile.magic = 'empty'
++                    if (not pkgfile.magic and
++                            not pkgfile.is_ghost and _magic):
++                        # file() method evaluates every file twice with python2,
++                        # use descriptor() method instead
++                        try:
++                            fd = os.open(pkgfile.path, os.O_RDONLY)
++                            pkgfile.magic = b2s(_magic.descriptor(fd))
++                            os.close(fd)
++                        except OSError:
++                            pass
++                    if pkgfile.magic is None:
++                        pkgfile.magic = ''
++                    elif Pkg._magic_from_compressed_re.search(pkgfile.magic):
++                        # Discard magic from inside compressed files ("file -z")
++                        # until PkgFile gets decompression support.  We may get
++                        # such magic strings from package headers already now;
++                        # for example Fedora's rpmbuild as of F-11's 4.7.1 is
++                        # patched so it generates them.
++                        pkgfile.magic = ''
++                    if filecaps:
++                        pkgfile.filecaps = filecaps[idx]
++                    self._files[pkgfile.name] = pkgfile
++                except IndexError:
++                    # FIXME This really shouldn't happen, but it happens
++                    # reproducably on telegram-desktop 3.4.2
++                    pass
+ 
+     def readlink(self, pkgfile):
+         """

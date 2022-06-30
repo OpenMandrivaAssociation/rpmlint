@@ -1,7 +1,7 @@
 Summary:	RPM correctness checker
 Name:		rpmlint
 Version:	1.11
-Release:	13
+Release:	14
 License:	GPLv2+
 Group:		Development/Other
 URL:		https://github.com/rpm-software-management/rpmlint
@@ -32,8 +32,8 @@ Suggests:	python-enchant
 Requires:	distro-release-rpmlint-policy
 Requires:	cpio
 Requires:	binutils
-Requires:	gzip
-Requires:	bzip2
+Requires:	pigz
+Requires:	pbzip2
 Requires:	xz
 Requires:	zstd
 # Needed for man page check in FilesCheck.py
@@ -73,8 +73,8 @@ install -d %{buildroot}%{_datadir}/%{name}/config.d/
 %doc README.md config.example COPYING
 %{_bindir}/*
 %{_datadir}/rpmlint/
-%{_mandir}/man1/rpmlint.1*
-%{_mandir}/man1/rpmdiff.1*
+%doc %{_mandir}/man1/rpmlint.1*
+%doc %{_mandir}/man1/rpmdiff.1*
 %dir %{_sysconfdir}/%{name}
 %config(noreplace) %{_sysconfdir}/%{name}/config
 %{_datadir}/bash-completion/completions/rpmlint

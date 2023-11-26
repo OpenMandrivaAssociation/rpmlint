@@ -1,26 +1,12 @@
 Summary:	RPM correctness checker
 Name:		rpmlint
-Version:	1.11
-Release:	15
+Version:	2.5.0
+Release:	1
 License:	GPLv2+
 Group:		Development/Other
 URL:		https://github.com/rpm-software-management/rpmlint
-Source0:	https://github.com/rpm-software-management/rpmlint/archive/%{name}-%{version}.tar.gz
+Source0:	https://github.com/rpm-software-management/rpmlint/archive/refs/tags/%{version}.tar.gz
 Source1:	rpmlint.config
-# Backports from upstream
-Patch0001:	rpmlint-1.11-rpm4.15.patch
-
-# Mageia specific patches
-Patch1001:	1001-Add-some-licenses-allowed-in-Fedora-as-they-are-allo.patch
-Patch1002:	1002-Throw-an-error-with-a-deprecation-notice-for-apply_p.patch
-Patch1003:	python38.patch
-
-# OpenMandriva specific patches
-Patch2000:	rpmlint-1.11-dont-fail-on-missing-locales.patch
-Patch2001:	rpmlint-rpmlint-1.11-add-Zstandard-support.patch
-# FIXME this should be fixed properly
-Patch2002:	rpmlint-1.11-work-around-tdesktop-error.patch
-
 BuildRequires:	pkgconfig(python)
 BuildRequires:	python-rpm
 BuildRequires:	pkgconfig(bash-completion)
@@ -46,13 +32,13 @@ Rpmlint is a tool to check common errors on rpm packages.
 Binary and source packages can be checked.
 
 %prep
-%autosetup -p1 -n %{name}-%{name}-%{version}
+%autosetup -p1
 
-cp -p config config.example
 install -pm 644 %{SOURCE1} config
 
 %build
 %make_build COMPILE_PYC=1 PYTHON=%{__python}
+%py_build
 
 # (tpg) disable it for now
 # [02:35] <King_InuYasha> _TPG: py.test -> pytest
@@ -65,17 +51,11 @@ make check
 %endif
 
 %install
-%make_install PYTHON=%{__python}
+%py_install
 
 install -d %{buildroot}%{_datadir}/%{name}/config.d/
 
 %files
-%doc README.md config.example COPYING
 %{_bindir}/*
-%{_datadir}/rpmlint/
-%doc %{_mandir}/man1/rpmlint.1*
-%doc %{_mandir}/man1/rpmdiff.1*
-%dir %{_sysconfdir}/%{name}
-%config(noreplace) %{_sysconfdir}/%{name}/config
-%{_datadir}/bash-completion/completions/rpmlint
-%{_datadir}/bash-completion/completions/rpmdiff
+%{py_puresitedir}/rpmlint
+%{py_puresitedir}/rpmlint*.*-info

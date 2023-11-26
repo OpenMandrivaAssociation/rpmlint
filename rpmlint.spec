@@ -8,6 +8,7 @@ URL:		https://github.com/rpm-software-management/rpmlint
 Source0:	https://github.com/rpm-software-management/rpmlint/archive/refs/tags/%{version}.tar.gz
 Source1:	openmandriva.toml
 Source2:	licenses.toml
+Patch0:		rpmlint-2.5.0-fix-python-check.patch
 BuildRequires:	pkgconfig(python)
 BuildRequires:	python-rpm
 BuildRequires:	pkgconfig(bash-completion)

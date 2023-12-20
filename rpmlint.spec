@@ -1,7 +1,7 @@
 Summary:	RPM correctness checker
 Name:		rpmlint
 Version:	2.5.0
-Release:	3
+Release:	4
 License:	GPLv2+
 Group:		Development/Other
 URL:		https://github.com/rpm-software-management/rpmlint
@@ -23,15 +23,7 @@ Requires:	python%{pyver}dist(packaging)
 Suggests:	python%{pyver}dist(pyenchant)
 Requires:	desktop-file-utils
 Requires:	distro-release-rpmlint-policy
-Requires:	cpio
-Requires:	binutils
-Requires:	pigz
-Requires:	pbzip2
-Requires:	xz
-Requires:	zstd
-# Needed for man page check in FilesCheck.py
-Requires:	groff-for-man
-Suggests:	myspell-en
+Requires:	distro-release-rpm-setup-build
 BuildArch:	noarch
 
 %description

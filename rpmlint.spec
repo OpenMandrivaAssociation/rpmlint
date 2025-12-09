@@ -22,6 +22,7 @@ Source2:	licenses.toml
 BuildRequires:	python-rpm
 BuildRequires:	pkgconfig(bash-completion)
 BuildRequires:	python%{pyver}dist(pip)
+BuildRequires:	python%{pyver}dist(setuptools)
 Requires:	python > 3.0
 Requires:	python-rpm
 Requires:	python%{pyver}dist(file-magic)

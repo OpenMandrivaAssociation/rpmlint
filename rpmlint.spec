@@ -6,11 +6,11 @@
 #  - update python
 #  - rebuild real rpmlint's dependencies for the new python
 #  - build regular rpmlint again
-%bcond_without dummy
+%bcond_with dummy
 
 Summary:	RPM correctness checker
 Name:		rpmlint
-Version:	2.7.0
+Version:	2.8.0
 Release:	1
 License:	GPLv2+
 Group:		Development/Other
@@ -19,10 +19,9 @@ Source0:	https://github.com/rpm-software-management/rpmlint/archive/refs/tags/%{
 Source1:	openmandriva.toml
 Source2:	licenses.toml
 %if ! %{with dummy}
-Patch0:		rpmlint-2.5.0-fix-python-check.patch
-BuildRequires:	pkgconfig(python)
 BuildRequires:	python-rpm
 BuildRequires:	pkgconfig(bash-completion)
+BuildRequires:	python%{pyver}dist(pip)
 Requires:	python > 3.0
 Requires:	python-rpm
 Requires:	python%{pyver}dist(file-magic)
@@ -60,7 +59,12 @@ mkdir -p %{buildroot}%{_sysconfdir}/xdg/rpmlint
 cp %{S:1} %{S:2} %{buildroot}%{_sysconfdir}/xdg/rpmlint
 %else
 mkdir -p %{buildroot}%{_bindir}
-ln -s true %{buildroot}%{_bindir}/rpmlint
+cat >%{buildroot}%{_bindir}/rpmlint <<'EOF'
+#!/bin/sh
+echo rpmlint temporarily disabled for python upgrade >&2
+exit 0
+EOF
+chmod +x %{buildroot}%{_bindir}/rpmlint
 %endif
 
 %files

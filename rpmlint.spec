@@ -8,14 +8,19 @@
 #  - build regular rpmlint again
 %bcond_with dummy
 
-Summary:	RPM correctness checker
+# NOTE Check upstream https://github.com/spdx/license-list-data for a relase
+# NOTE of updated SPDX licence qualifiers, if so, run generate-spdx-licenses.sh
+# NOTE in order to create an update licenses.toml file to pprovide for updated
+# NOTE rpmlint releases.
+
 Name:		rpmlint
-Version:	2.8.0
+Summary:	RPM correctness checker
+Version:	2.9.0
 Release:	1
 License:	GPLv2+
 Group:		Development/Other
 URL:		https://github.com/rpm-software-management/rpmlint
-Source0:	https://github.com/rpm-software-management/rpmlint/archive/refs/tags/%{version}.tar.gz
+Source0:	https://github.com/rpm-software-management/rpmlint/archive/%{version}/%{name}-%{version}.tar.gz
 Source1:	openmandriva.toml
 Source2:	licenses.toml
 %if ! %{with dummy}

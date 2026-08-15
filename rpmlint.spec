@@ -16,13 +16,14 @@
 Name:		rpmlint
 Summary:	RPM correctness checker
 Version:	2.9.0
-Release:	1
+Release:	2
 License:	GPLv2+
 Group:		Development/Other
 URL:		https://github.com/rpm-software-management/rpmlint
 Source0:	https://github.com/rpm-software-management/rpmlint/archive/%{version}/%{name}-%{version}.tar.gz
 Source1:	openmandriva.toml
 Source2:	licenses.toml
+Patch0:		rpmlint-2.9.0-mklibname-sticky.patch
 %if ! %{with dummy}
 BuildRequires:	python-rpm
 BuildRequires:	pkgconfig(bash-completion)

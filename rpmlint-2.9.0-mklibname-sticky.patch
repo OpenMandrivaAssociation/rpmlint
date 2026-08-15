@@ -1,0 +1,66 @@
+diff -ruN a/rpmlint/checks/SpecCheck.py b/rpmlint/checks/SpecCheck.py
+--- a/rpmlint/checks/SpecCheck.py	2026-02-11 09:08:15.000000000 +0100
++++ b/rpmlint/checks/SpecCheck.py	2026-08-15 19:36:24.581832573 +0200
+@@ -574,7 +574,7 @@
+                                  res.group(1).lstrip())
+ 
+     def _checkline_mklibname(self, line):
+-        self.mklibname = '%mklibname' in line
++        self.mklibname = self.mklibname or '%mklibname' in line
+ 
+     # line checks package methods
+     def _checkline_package_patch(self, line):
+diff -ruN a/test/spec/lib-package-with-%mklibname-not-last.spec b/test/spec/lib-package-with-%mklibname-not-last.spec
+--- a/test/spec/lib-package-with-%mklibname-not-last.spec	1970-01-01 01:00:00.000000000 +0100
++++ b/test/spec/lib-package-with-%mklibname-not-last.spec	2026-08-15 19:36:24.586081016 +0200
+@@ -0,0 +1,30 @@
++%define libname %mklibname foo
++
++Name:           foo
++Version:        0
++Release:        0
++Summary:        None here
++
++Group:          Undefined
++License:        GPLv2
++URL:            http://rpmlint.zarb.org/#%{name}
++Source0:        Source0.tar.gz
++
++%description
++%mklibname is used above, but not on the last line.
++
++%package -n %{libname}
++Summary:        Library
++
++%description -n %{libname}
++Library files.
++
++%prep
++%autosetup
++
++%build
++
++%install
++
++%files -n %{libname}
++%{_libdir}/libfoo.so.*
+diff -ruN a/test/test_speccheck.py b/test/test_speccheck.py
+--- a/test/test_speccheck.py	2026-02-11 09:08:15.000000000 +0100
++++ b/test/test_speccheck.py	2026-08-15 19:36:24.602884520 +0200
+@@ -976,6 +976,16 @@
+     assert 'E: lib-package-without-%mklibname' not in out
+ 
+ 
++@pytest.mark.parametrize('package', ['spec/lib-package-with-%mklibname-not-last'])
++def test_check_mklibname_not_only_last_line(package, speccheck):
++    """%mklibname on an early line must count even if later lines omit it."""
++    output, test = speccheck
++    pkg = get_tested_spec_package(package)
++    test.check_spec(pkg)
++    out = output.print_results(output.results)
++    assert 'E: lib-package-without-%mklibname' not in out
++
++
+ @pytest.mark.parametrize('package', ['spec/depscript-without-disabling-depgen'])
+ def test_check_depscript_without_disabling_depgen(package, speccheck):
+     """Test if specfile has define __find_provides/requires."""

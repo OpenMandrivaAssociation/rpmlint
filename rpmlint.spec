@@ -6,7 +6,9 @@
 #  - update python
 #  - rebuild real rpmlint's dependencies for the new python
 #  - build regular rpmlint again
-%bcond_with dummy
+# Dummy is the default while Python 3.15 is bootstrapped.
+# Flip the bcond back so dummy is off when the real rpmlint returns.
+%bcond_without dummy
 
 # NOTE Check upstream https://github.com/spdx/license-list-data for a relase
 # NOTE of updated SPDX licence qualifiers, if so, run generate-spdx-licenses.sh
@@ -16,7 +18,7 @@
 Name:		rpmlint
 Summary:	RPM correctness checker
 Version:	2.10.0
-Release:	1
+Release:	2
 License:	GPLv2+
 Group:		Development/Other
 URL:		https://github.com/rpm-software-management/rpmlint

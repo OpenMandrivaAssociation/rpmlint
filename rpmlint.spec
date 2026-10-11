@@ -38,6 +38,9 @@ Requires:	python%{pyver}dist(pyxdg)
 Requires:	python%{pyver}dist(tomli-w)
 Requires:	python%{pyver}dist(zstandard)
 Requires:	python%{pyver}dist(packaging)
+# Spellcheck imports enchant optionally. Keep it a weak dependency.
+# The metadata generator would otherwise turn it into a hard Requires.
+%global __requires_exclude %{?__requires_exclude:%{__requires_exclude}|}^python%{pyver}dist\\(pyenchant\\)$
 Suggests:	python%{pyver}dist(pyenchant)
 Requires:	desktop-file-utils
 Requires:	distro-release-rpmlint-policy
